@@ -1,0 +1,6 @@
+venv
+*.pyc
+*~
+*.swp
+csr-menus
+menulist.csv

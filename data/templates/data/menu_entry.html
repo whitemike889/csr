@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="{{ menu.get_url }}">View Menu</a>
+
+<form method="post" id="menuform" action="">
+{% csrf_token %}
+
+{{ entryformset }}
+{{ itemformset }}
+<input type="hidden" id="adsjklfhdsal" name="bh">
+<input type="submit" name="action" value="+">
+<input type="submit" name="action" value="submit">
+<input id="entryLogBtn" type="submit" name="action" value="log">
+</form>
+
+{% include "includes/time.html" %}
+
+{% endblock %}

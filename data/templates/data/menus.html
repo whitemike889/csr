@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table>
+{% for menu in menus %}
+<tr>
+    <td><a href="{% url 'data:menu_entry' menu.id %}">{{ menu.filename }}</a></td>
+    <td>{{ menu.finished }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
