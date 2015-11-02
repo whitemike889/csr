@@ -32,7 +32,7 @@ class MenuEntry(models.Model):
     restaurantName = models.CharField('Restaurant Name', max_length=512)
     finished = models.IntegerField(choices=CHOICES, default=0)
     timestarted = models.DateTimeField(default=get_now)
-    timefinished = models.DateTimeField(blank=True)
+    timefinished = models.DateTimeField(null=True, blank=True)
 
     ## WRITE A VIEW TO OVERRIDE SAVE FUNCTION THAT CHECKS IF FINISHED IS MARKED!
     def save(self, *args, **kwargs):

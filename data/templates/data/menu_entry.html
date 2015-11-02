@@ -2,18 +2,47 @@
 
 {% block content %}
 
-<a href="{{ menu.get_url }}">View Menu</a>
-
-<form method="post" id="menuform" action="">
-{% csrf_token %}
-
-{{ entryformset }}
-{{ itemformset }}
-<input type="hidden" id="adsjklfhdsal" name="bh">
-<input type="submit" name="action" value="+">
-<input type="submit" name="action" value="submit">
-<input id="entryLogBtn" type="submit" name="action" value="log">
+<div class="container">
+    <form method="post" id="menuform" action="">
+    {% csrf_token %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{{ menu.get_url }}">View Menu</a>
+        </div>
+        <div class="panel-body form-inline">
+            <div class="form-group">
+                {{ entryformset }}
+            </div>
+        </div>
+    <table class="table">
+        {{ itemformset.management_form }}
+        {% for form in itemformset %}
+        <tr><td class="form-inline">
+            {% for field in form %}
+            {% if not forloop.last %}
+            <div class="form-group">
+                <label class="sr-only" for="{{ field.id_for_label }}">{{ field.name }}</label>
+                {{ field }}
+            </div>
+            {% else %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">delete</label>
+                {{ field }}
+            </div>
+            {% endif %}
+            {% endfor %}
+                {% if form.errors %}<span class="text-danger">Missing Fields</span>{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="panel-footer">
+        <button class="btn btn-info" type="submit" name="action" value="+">Add / Save</button>
+        <input class="btn btn-success" type="submit" name="action" value="submit">
+        <input id="entryLogBtn" type="submit" name="action" value="log">
+    </div>
 </form>
+</div>
 
 {% include "includes/time.html" %}
 

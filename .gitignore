@@ -4,3 +4,4 @@ venv
 *.swp
 csr-menus
 menulist.csv
+staticfiles

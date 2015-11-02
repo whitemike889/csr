@@ -17,8 +17,12 @@
 <div class="container">
 
 {% if user.is_authenticated %}
-    <p>You are already logged in</p>
-    <a href="{% url 'logout' %}">logout</a> <a href="{% url 'data:index' %}">continue</a>
+<div class="col-md-8 col-md-pull-4">
+    <div class="alert alert-info">
+        <p>You are already logged in</p>
+        <a href="{% url 'logout' %}">logout</a> <a href="{% url 'data:index' %}">continue</a>
+    </div>
+</div>
 {% else %}
 
 <form method='post' action="{% url 'login' %}" class="form-signin">
@@ -30,8 +34,17 @@
     <input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
     <input type='submit' class="btn btn-lg btn-primary btn-block" value="login" />
     <input type="hidden" value="{{ next }}"/>
+
+    {% if form.errors %}
+        <div class="alert alert-danger" roll="alert">
+            Username and password combination are not recognized.
+        </div>
+
+    {% endif %}
 </form>
 {% endif %}
+
+
 
 </div> <!-- /containter -->
  <script src="{% static '/js/ie10-viewport-bug-workaround.js' %}"></script>

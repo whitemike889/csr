@@ -5,6 +5,9 @@ from django.http import HttpResponseRedirect
 from .models import Menu, MenuEntry, MenuItem, EventLog
 from django.forms.models import inlineformset_factory, modelformset_factory
 from .decorators import timeout_logging
+from forms import MenuItemForm
+from django.db import models
+from django import forms
 
 # Create your views here.
 
@@ -30,13 +33,17 @@ def list_menus(request):
     return render(request, "data/menus.html", context)
 
 
+def field_widget_callback(field):
+    return forms.TextInput(attrs={'placeholder': field.name})
+
+
 @login_required(login_url="/login/")
 @timeout_logging
 def menu_entry(request, menu_id):
     inactive = 0
     menu = Menu.objects.get(id=menu_id)
     MenuEntryFormset = modelformset_factory(MenuEntry, fields=('restaurantName', 'finished',), max_num=1)
-    MenuItemFormset = inlineformset_factory(MenuEntry, MenuItem, exclude=('id',), extra=1)
+    MenuItemFormset = inlineformset_factory(MenuEntry, MenuItem, MenuItemForm, extra=1)
     menuentry, created = MenuEntry.objects.get_or_create(user_id=request.user.id, menu_id=menu_id)
     menuQuery = MenuEntry.objects.filter(user_id=request.user.id, menu_id=menu_id)
     # Evaluate which form the post came from.  If from timer, then repopulate with request.DATA

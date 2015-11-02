@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<table>
+<div class="container">
+    <div class="page-header">
+        <h3>Assignments</h3>
+    </div>
+<ul class='list-group'>
 {% for menu in menus %}
-<tr>
-    <td><a href="{% url 'data:menu_entry' menu.id %}">{{ menu.filename }}</a></td>
-    <td>{{ menu.finished }}</td>
-</tr>
+<li class="list-group-item">
+    {% if menu.finished == 1 %}
+        <span class="badge">Complete</span>
+    {% endif %}
+    <a href="{% url 'data:menu_entry' menu.id %}">{{ menu.filename }}</a>
+</li>
 {% endfor %}
-</table>
+</ul>
+</div> <!-- /.container -->
 {% endblock %}
