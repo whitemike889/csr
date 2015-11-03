@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("MYAPP_DEBUG", False)
 
-ALLOWED_HOSTS = ["pure-temple-6270.herokuapp.com",]
+ALLOWED_HOSTS = [".herokuapp.com",]
 
 
 # Application definition
