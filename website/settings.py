@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("MYAPP_DEBUG", False)
 
-ALLOWED_HOSTS = ["*",]
+ALLOWED_HOSTS = ["*.herokuapp.com",]
 
 
 # Application definition
@@ -96,7 +97,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-import dj_database_url
 
 DATABASES['default'] = dj_database_url.config(default='postgres://postgres:joseph@localhost:5432/csr')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARED_PROTO', 'https')
