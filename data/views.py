@@ -49,7 +49,6 @@ def menu_entry(request, menu_id):
     # Evaluate which form the post came from.  If from timer, then repopulate with request.DATA
     # else save it per usual
     if request.method == "POST":
-        print "Work Timer: {}".format(request.POST['seconds'])
         entryformset = MenuEntryFormset(request.POST, request.FILES)
         itemformset = MenuItemFormset(request.POST, request.FILES, instance=menuentry)
         if request.POST['action'] == "+" or request.POST['action'] == "submit":

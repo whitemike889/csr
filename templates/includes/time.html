@@ -1,3 +1,4 @@
+{% load staticfiles %}
 
 <button hidden type="button" id="modalBtn" data-toggle="modal" data-target="#myModal">
 </button>
@@ -23,74 +24,10 @@
 
 <script>
 
-var idleTime = 0;
-var modalBtn = document.getElementById('modalBtn')
-var worktimer = 0;
-var eventForm = document.getElementById('menuform');
-var eventSubmit = document.getElementById('entryLogBtn')
-var input = document.createElement('input');
-var workTimerThreshold = 30; //seconds
-var logOutThreshold = 240; //seconds
-input.type = "hidden";
-
-
 if ({{ inactive }}  == 1) {
-    modalBtn.click()
-    idleTime = idleTime + workTimerThreshold;
+    document.getElementById('modalBtn').click()
+
 }
-
-$(document).ready(function () {
-
-    var timeInterval = setInterval(function () { checkModal(timerIncrement); }, 1000);
-
-    $(this).mousemove( function (e) {
-        checkModal(resetIdle);
-    });
-
-    $(this).keypress( function (e) {
-        checkModal(resetIdle);
-    });
-
-    $(eventForm).on('submit', function () {
-        input.name = "seconds"
-        input.value = worktimer
-        eventForm.appendChild(input)
-    });
-
-
-
-});
-
-function checkModal( callback ) {
-    var classes = document.getElementById('myModal').classList;
-    var pause = 0;
-    for (var i = 0; i < classes.length; i++){
-        if (classes[i]  == "in") {
-            var pause = 1
-        }
-    }
-    callback(pause);
-}
-
-function resetIdle( pause ) {
-    if (!pause){
-        idleTime = 0;
-    }
-}
-
-function timerIncrement( pause ) {
-    console.log(idleTime);
-    if (!pause){
-        if (idleTime > workTimerThreshold) {
-            eventSubmit.click()
-        } else {
-            worktimer = worktimer + 1;
-        }
-    }
-    idleTime = idleTime + 1;
-    if (idleTime > logOutThreshold) {
-        //alert("Time to log out")
-    }
-}
-
 </script>
+
+<script src="{% static 'js/timer.js' %}"></script>

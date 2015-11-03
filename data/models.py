@@ -20,6 +20,11 @@ class Menu(models.Model):
             status = 0
         return status
 
+class WorkTimer(models.Model):
+    user = models.ForeignKey(User)
+    value = models.IntegerField()
+    token = models.CharField(max_length=256)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 class MenuEntry(models.Model):
     CHOICES = (
