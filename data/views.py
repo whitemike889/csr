@@ -13,10 +13,8 @@ from django import forms
 
 @login_required(login_url="/login/")
 def index(request):
-    if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('data:menus'))
-    else:
-        return render(request, 'login.html')
+    return HttpResponseRedirect(reverse('data:menus'))
+
 
 @login_required(login_url="/login/")
 def list_menus(request):
@@ -49,6 +47,7 @@ def menu_entry(request, menu_id):
     # Evaluate which form the post came from.  If from timer, then repopulate with request.DATA
     # else save it per usual
     if request.method == "POST":
+        print "GUID: {}".format(request.POST['seconds'])
         entryformset = MenuEntryFormset(request.POST, request.FILES)
         itemformset = MenuItemFormset(request.POST, request.FILES, instance=menuentry)
         if request.POST['action'] == "+" or request.POST['action'] == "submit":
