@@ -96,6 +96,16 @@ USE_TZ = True
 
 
 DATABASES['default'] = dj_database_url.config(default='postgres://postgres:joseph@localhost:5432/csr')
+
+DATABASES['local'] = {
+    'NAME': 'csr',
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'USER': 'postgres',
+    'PASSWORD': 'joseph',
+    'HOST': '127.0.0.1',
+    'PORT': '5432',
+}
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 #ALLOW ALL HOSTS
@@ -115,3 +125,10 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/menus'
+LOGIN_URL = '/login'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.getenv('admin_email')
+EMAIL_HOST_PASSWORD = os.getenv('admin_password')
+EMAIL_PORT = 587
