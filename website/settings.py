@@ -99,6 +99,7 @@ USE_TZ = True
 import dj_database_url
 
 DATABASES['default'] = dj_database_url.config(default='postgres://postgres:joseph@localhost:5432/csr')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARED_PROTO', 'https')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
