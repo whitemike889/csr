@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("MYAPP_DEBUG", False)
 
-ALLOWED_HOSTS = ["*.herokuapp.com",]
+
 
 
 # Application definition
@@ -97,6 +97,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+ALLOWED_HOSTS = ['.herokuapp.com']
 
 DATABASES['default'] = dj_database_url.config(default='postgres://postgres:joseph@localhost:5432/csr')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARED_PROTO', 'https')
