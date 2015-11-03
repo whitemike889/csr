@@ -49,7 +49,9 @@
         <div class="alert alert-danger" roll="alert">
             Username and password combination are not recognized.
         </div>
-
+        <div class="alrt alert-info" roll="alert">
+            <a href="{% url 'password_reset' %}">forgot password?</a>
+        </div>
     {% endif %}
 </form>
 {% endif %}

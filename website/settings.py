@@ -25,7 +25,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("MYAPP_DEBUG", False)
-DEBUG = False
 
 # Application definition
 
@@ -101,6 +100,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 #ALLOW ALL HOSTS
 ALLOWED_HOSTS = ['.herokuapp.com']
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
