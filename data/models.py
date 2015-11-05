@@ -20,6 +20,9 @@ class Menu(models.Model):
             status = 0
         return status
 
+    def __str__(self):
+        return self.get_url()
+
 class WorkTimer(models.Model):
     user = models.ForeignKey(User)
     value = models.IntegerField()
@@ -45,6 +48,10 @@ class MenuEntry(models.Model):
             self.timefinished = get_now()
         super(MenuEntry, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.restaurantName or "Blank"
+
+
 class MenuItem(models.Model):
     CHOICES = (
         ('S', "Side/App"),
@@ -56,7 +63,7 @@ class MenuItem(models.Model):
     price = models.CharField("Price", max_length=256, blank=True)
     classification = models.CharField(max_length=2, choices=CHOICES)
     timestarted = models.DateTimeField(default=get_now)
-    timefinshed = models.DateTimeField(auto_now_add=True)
+    timefinished = models.DateTimeField(auto_now_add=True)
 
 
 def get_now():

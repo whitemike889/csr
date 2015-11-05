@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import WorkTimer
+from .models import WorkTimer, MenuEntry, MenuItem
 from django.contrib.auth.models import User
 # Register your models here.
 
@@ -33,3 +33,18 @@ class BillableHoursAdmin(admin.ModelAdmin):
 
     def billable_hours(self, x):
         return x.get_billable_hours()
+
+class MenuItemInline(admin.TabularInline):
+    model = MenuItem
+    extra = 0
+
+    readonly_fields = ('timestarted', 'timefinished',)
+
+@admin.register(MenuEntry)
+class MenuEntryAdmin(admin.ModelAdmin):
+
+    readonly_fields = ('user', 'menu',)
+
+    inlines = [
+        MenuItemInline
+    ]

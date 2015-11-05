@@ -5,3 +5,4 @@ venv
 csr-menus
 menulist.csv
 staticfiles
+postgres
