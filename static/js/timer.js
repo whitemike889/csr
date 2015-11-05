@@ -68,7 +68,6 @@ function resetIdle( pause ) {
 }
 
 function timerIncrement( pause ) {
-    console.log(idleTime);
     if (!pause){
         if (idleTime > workTimerThreshold) {
             eventSubmit.click()
