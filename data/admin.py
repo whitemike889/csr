@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import WorkTimer, MenuEntry, MenuItem
+from .models import WorkTimer, MenuEntry, MenuItem, EventLog
 from django.contrib.auth.models import User
 # Register your models here.
 
@@ -48,3 +48,10 @@ class MenuEntryAdmin(admin.ModelAdmin):
     inlines = [
         MenuItemInline
     ]
+
+@admin.register(EventLog)
+class EventLog(admin.ModelAdmin):
+    list_display = ('get_username', 'name', 'timestamp',)
+
+    def get_username(self, x):
+        return x.menuentry.user.username
