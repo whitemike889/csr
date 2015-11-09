@@ -7,19 +7,11 @@ var eventSubmit = document.getElementById('entryLogBtn')
 var secondsInput = document.createElement('input');
 var tokenInput = document.createElement('input');
 var workTimerThreshold = 30; //seconds
-var logOutThreshold = 240; //seconds
+var logOutThreshold = 120; //seconds
 secondsInput.type = "hidden";
 tokenInput.type="hidden";
 
-var generateUid = function (separator) {
-    var delim = separator || "-";
 
-    function S4 () {
-        return(((1 + Math.random()) * 0x10000 ) | 0).toString(16).substring(1);
-    }
-
-    return (S4() + S4() + delim + S4() + delim + S4() + delim + S4() + delim + S4() + S4() + S4());
-};
 
 $(document).ready(function () {
 
@@ -65,7 +57,7 @@ function resetIdle( pause ) {
     if (!pause){
         idleTime = 0;
     }
-}
+};
 
 function timerIncrement( pause ) {
     if (!pause){
@@ -77,6 +69,16 @@ function timerIncrement( pause ) {
     }
     idleTime = idleTime + 1;
     if (idleTime > logOutThreshold) {
-        //alert("Time to log out")
+        window.location.href = ('/logout')
     }
-}
+};
+
+var generateUid = function (separator) {
+    var delim = separator || "-";
+
+    function S4 () {
+        return(((1 + Math.random()) * 0x10000 ) | 0).toString(16).substring(1);
+    }
+
+    return (S4() + S4() + delim + S4() + delim + S4() + delim + S4() + delim + S4() + S4() + S4());
+};
