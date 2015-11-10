@@ -61,7 +61,7 @@ function resetIdle( pause ) {
 
 function timerIncrement( pause ) {
     if (!pause){
-        if (idleTime > workTimerThreshold) {
+        if (idleTime >= workTimerThreshold) {
             eventSubmit.click()
         } else {
             worktimer = worktimer + 1;

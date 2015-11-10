@@ -2,18 +2,23 @@
 
 {% block content %}
 <div class="container">
-    <div class="page-header">
-        <h3>Assignments</h3>
-    </div>
-<ul class='list-group'>
-{% for menu in menus %}
-<li class="list-group-item">
-    {% if menu.finished == 1 %}
-        <span class="badge">Complete</span>
-    {% endif %}
-    <a href="{% url 'data:menu_entry' menu.id %}">{{ menu.filename }}</a>
-</li>
-{% endfor %}
-</ul>
+    <div class="row">
+        <div class="col-md-8 page-header">
+            <h3>Assignments</h3>
+        </div>
+        <div class="col-md-8">
+            <ul class='list-group'>
+            {% for menu in menus %}
+            <li class="list-group-item">
+                {% if menu.finished == 1 %}
+                    <span class="badge">Complete</span>
+                {% endif %}
+                <a href="{% url 'data:menu_entry' menu.id %}">{{ menu.filename }}</a>
+            </li>
+            {% endfor %}
+            </ul>
+        </div><!-- /.col-md-8 -->
+        {% include "data/includes/info.html" %}
+    </div><!-- /.row -->
 </div> <!-- /.container -->
 {% endblock %}
