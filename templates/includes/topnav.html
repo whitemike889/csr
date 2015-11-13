@@ -7,11 +7,6 @@
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'data:menus' %}">Assignments</a></li>
             </ul>
-            {% if user.is_authenticated %}
-            <ul class="nav navbar-nav" style="float:right;">
-                <li><a href="/logout/">Logout</a></li>
-            </ul>
-            {% endif %}
         </div><!--/ .nav-collapse -->
     </div>
 </nav>

@@ -2,6 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <span class="text-muted">logged in as</span> {{ user.username }}
+            <a href="{% url 'data:logout' %}" class="btn btn-default">logout</a>
         </div>
         <div class="panel-body">
             <div class="row">

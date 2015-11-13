@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <div class="container">
+
+{% if user.is_authenticated %}
     <form method="post" id="menuform" action="">
     {% csrf_token %}
     <div class="panel panel-default">
@@ -42,8 +43,15 @@
         <input id="entryLogBtn" type="submit" name="action" value="log">
     </div>
 </form>
-</div>
 
 {% include "includes/time.html" %}
 
+{% else %}
+<div class="alert alert-danger">
+    You have been logged out due to inactivity.  <a href="{% url 'data:index' %}">home</a>
+</div>
+
+{% endif %}
+
+</div>
 {% endblock %}
