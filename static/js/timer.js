@@ -68,6 +68,9 @@ function timerIncrement( pause ) {
         }
     }
     idleTime = idleTime + 1;
+
+    document.getElementById('idleTime').innerHTML = idleTime;
+    document.getElementById("workTime").innerHTML = worktimer;
     if (idleTime > logOutThreshold) {
         window.location.href = ('/logout')
     }

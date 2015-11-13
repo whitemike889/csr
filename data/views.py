@@ -8,6 +8,7 @@ from .decorators import timeout_logging
 from forms import MenuItemForm
 from django.db import models
 from django import forms
+from django.conf import settings
 
 # Create your views here.
 
@@ -71,6 +72,7 @@ def menu_entry(request, menu_id):
         'menu': menu,
         'entryformset': entryformset,
         'itemformset': itemformset,
+        'DEBUG': settings.DEBUG,
     }
     return render(request, "data/menu_entry.html", context)
 
