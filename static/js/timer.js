@@ -71,7 +71,7 @@ function timerIncrement( pause ) {
 
     document.getElementById('idleTime').innerHTML = idleTime;
     document.getElementById("workTime").innerHTML = worktimer;
-    if (idleTime > logOutThreshold) {
+    if (idleTime >= logOutThreshold) {
         window.location.href = ('/logout')
     }
 };
