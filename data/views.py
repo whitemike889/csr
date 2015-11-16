@@ -36,7 +36,6 @@ def field_widget_callback(field):
     return forms.TextInput(attrs={'placeholder': field.name})
 
 
-@login_required(login_url="/login/")
 @timeout_logging
 def menu_entry(request, menu_id):
     inactive = 0

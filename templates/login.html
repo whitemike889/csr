@@ -18,11 +18,13 @@
 <div class="container">
 
 {% if user.is_authenticated %}
-<div class="col-md-8 col-md-pull-4">
+<div class="row">
+<div class="col-md-8">
     <div class="alert alert-info">
         <p>You are already logged in</p>
         <a href="{% url 'data:logout' %}">logout</a> <a href="{% url 'data:index' %}">continue</a>
     </div>
+</div>
 </div>
 {% else %}
 
@@ -44,7 +46,15 @@
             <a href="{% url 'password_reset' %}">forgot password?</a>
         </div>
     {% endif %}
+
+    {% if message %}
+    <div class="alert alert-warning" roll="alert">
+        {{ message }}
+    </div>
+    {% endif %}
 </form>
+
+
 {% endif %}
 
 
