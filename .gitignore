@@ -6,3 +6,5 @@ csr-menus
 menulist.csv
 staticfiles
 postgres
+.DS_Store
+csr_task_images
