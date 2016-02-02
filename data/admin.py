@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import WorkTimer, MenuEntry, MenuItem, EventLog
+from .models import WorkTimer, Task, EventLog
 from django.contrib.auth.models import User
+import user_patch
 # Register your models here.
 
 class TimeSheet(User):
     class Meta:
-        proxy = True
+       proxy = True
 
 @admin.register(WorkTimer)
 class WorkTimerAdmin(admin.ModelAdmin):
@@ -34,24 +35,14 @@ class BillableHoursAdmin(admin.ModelAdmin):
     def billable_hours(self, x):
         return x.get_billable_hours()
 
-class MenuItemInline(admin.TabularInline):
-    model = MenuItem
-    extra = 0
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
 
-    readonly_fields = ('timestarted', 'timefinished',)
-
-@admin.register(MenuEntry)
-class MenuEntryAdmin(admin.ModelAdmin):
-
-    readonly_fields = ('user', 'menu',)
-
-    inlines = [
-        MenuItemInline
-    ]
+    readonly_fields = ('user', 'image',)
 
 @admin.register(EventLog)
 class EventLog(admin.ModelAdmin):
     list_display = ('get_username', 'name', 'timestamp',)
 
     def get_username(self, x):
-        return x.menuentry.user.username
+        return x.task.user.username

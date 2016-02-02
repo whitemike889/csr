@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from data.models import MenuItem
+from data.models import Task
 from django import forms
 
 class MenuItemForm(ModelForm):
@@ -12,6 +12,6 @@ class MenuItemForm(ModelForm):
                     field.widget = forms.TextInput(attrs={'placeholder': field.label},)
 
     class Meta:
-        model = MenuItem
-        fields = ('name', 'price', 'classification', 'timestarted',)
+        model = Task
+        fields = ('timestarted',)
         widgets = {'timestarted': forms.HiddenInput()}

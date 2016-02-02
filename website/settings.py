@@ -97,7 +97,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-DATABASES['default'] = dj_database_url.config(default='postgres://postgres:joseph@localhost:5432/csr')
+DATABASES['default'] = dj_database_url.config()
 
 DATABASES['local'] = {
     'NAME': 'csr',
