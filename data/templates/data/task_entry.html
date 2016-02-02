@@ -4,15 +4,15 @@
 <div class="container">
 
 {% if user.is_authenticated %}
-    <form method="post" id="menuform" action="">
+    <form method="post" id="taskform" action="">
     {% csrf_token %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <a href="{{ menu.get_url }}" target="_blank">View Menu</a>
+            <a href="{{ task.image.get_url }}" target="_blank">View Menu</a>
         </div>
         <div class="panel-body form-inline">
             <div class="form-group">
-                {{ entryformset }}
+                {{ taskform }}
             </div>
         </div>
     <table class="table">
@@ -38,7 +38,7 @@
         {% endfor %}
     </table>
     <div class="panel-footer">
-        <button class="btn btn-info" type="submit" name="action" value="+">Add / Save</button>
+        <button class="btn btn-info" type="submit" name="action" value="+">Save</button>
         <input class="btn btn-success" type="submit" name="action" value="submit">
         <input id="entryLogBtn" type="submit" name="action" value="log">
     </div>

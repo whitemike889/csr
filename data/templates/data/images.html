@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 page-header">
+            <h3>Assignments</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-4">
+            <h4>Complete</h4>
+            <ul class='list-group'>
+            {% for task in images.finished %}
+                <li class="list-group-item">
+                    <span class="badge">Complete</span>
+                    <a href="{% url 'data:task_entry' task.id %}">{{ task }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-4">
+            <h4>Incomplete</h4>
+            <ul class="list-group">
+            {% for task in images.unfinished %}
+                <li class='list-group-item'>
+                    <a href="{% url 'data:task_entry' task.id %}">{{ task }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div><!-- /.col-md-8 -->
+        {% include "data/includes/info.html" %}
+    </div><!-- /.row -->
+</div> <!-- /.container -->
+{% endblock %}

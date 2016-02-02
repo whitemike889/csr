@@ -75,22 +75,22 @@ class Task(models.Model):
 
     user = models.ForeignKey(User)
     image = models.ForeignKey(Image)
-    address = models.CharField('Street Address', max_length=768)
+    address = models.CharField('Street Address', max_length=768, null=True)
     finished = models.IntegerField(choices=CHOICES, default=0)
-    month = models.IntegerField(choices=MONTHS)
-    year = models.IntegerField(choices=YEARS)
-    pic_quality = models.IntegerField("Picture Quality", choices=LIKERT)
-    str_quality = models.IntegerField("Street Quality", choices=LIKERT)
-    pot_holes = models.IntegerField("Pot Holes", choices=NUMBERS)
-    bui_quality = models.IntegerField("Building Quality", choices=LIKERT)
-    car_quality = models.IntegerField("Car Quality", choices=LIKERT)
-    litter = models.IntegerField(choices=LIKERT)
-    road_work = models.IntegerField("Road Work", choices=CHOICES)
-    for_sale = models.IntegerField("Houses for sale signs", choices=CHOICES)
-    shoes = models.IntegerField("Shoes on wire", choices=CHOICES)
-    people = models.IntegerField("People actively covering faces", choices=CHOICES)
-    broken_signs = models.IntegerField("Broken Street Signs", choices=CHOICES)
-    trees = models.IntegerField(choices=CHOICES)
+    month = models.IntegerField(choices=MONTHS, null=True)
+    year = models.IntegerField(choices=YEARS, null=True)
+    pic_quality = models.IntegerField("Picture Quality", choices=LIKERT, null=True)
+    str_quality = models.IntegerField("Street Quality", choices=LIKERT, null=True)
+    pot_holes = models.IntegerField("Pot Holes", choices=NUMBERS, null=True)
+    bui_quality = models.IntegerField("Building Quality", choices=LIKERT, null=True)
+    car_quality = models.IntegerField("Car Quality", choices=LIKERT, null=True)
+    litter = models.IntegerField(choices=LIKERT, null=True)
+    road_work = models.IntegerField("Road Work", choices=CHOICES, null=True)
+    for_sale = models.IntegerField("Houses for sale signs", choices=CHOICES, null=True)
+    shoes = models.IntegerField("Shoes on wire", choices=CHOICES, null=True)
+    people = models.IntegerField("People actively covering faces", choices=CHOICES, null=True)
+    broken_signs = models.IntegerField("Broken Street Signs", choices=CHOICES, null=True)
+    trees = models.IntegerField(choices=CHOICES, null=True)
 
     timestarted = models.DateTimeField(default=get_now)
     timefinished = models.DateTimeField(null=True, blank=True)
@@ -102,7 +102,7 @@ class Task(models.Model):
         super(Task, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.restaurantName or "Blank"
+        return self.address or self.image.filename
 
 def get_now():
     return timezone.now()

@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from .models import Image, Task, EventLog
-from django.forms.models import inlineformset_factory, modelformset_factory
+from django.forms.models import inlineformset_factory, modelform_factory
 from .decorators import timeout_logging
 from forms import MenuItemForm
 from django.db import models
@@ -15,7 +15,7 @@ import user_patch
 
 @login_required(login_url="/login/")
 def index(request):
-    return HttpResponseRedirect(reverse('data:menus'))
+    return HttpResponseRedirect(reverse('data:images'))
 
 
 @login_required(login_url="/login/")
@@ -24,7 +24,7 @@ def list_images(request):
     context = {
         'images': images,
     }
-    return render(request, "data/menus.html", context)
+    return render(request, "data/images.html", context)
 
 
 def field_widget_callback(field):
@@ -34,15 +34,15 @@ def field_widget_callback(field):
 def task_entry(request, task_id):
     inactive = 0
     task = Task.objects.get(id=task_id, user_id=request.user.id)
-    TaskFormset = modelformset_factory(Task, max_num=1)
+    TaskForm = modelform_factory(Task, exclude=['id', 'image', 'user'])
     # Evaluate which form the post came from.  If from timer, then repopulate with request.DATA
     # else save it per usual
     if request.method == "POST":
         print "GUID: {}".format(request.POST['seconds'])
-        taskformset = TaskFormset(request.POST, request.FILES)
+        taskform = TaskForm(request.POST, request.FILES, instance=task)
         if request.POST['action'] == "+" or request.POST['action'] == "submit":
-            if taskformset.is_valid():
-                entryformset.save()
+            if taskform.is_valid():
+                taskform.save()
                 if request.POST['action'] == "submit":
                     return HttpResponseRedirect(reverse('data:images'))
 
@@ -50,21 +50,21 @@ def task_entry(request, task_id):
             inactive = 1
 
     else:
-        taskformset = TaskFormset()
+        taskform = TaskForm(instance=task)
 
 
     context = {
         'inactive': inactive,
         'task': task,
-        'taskformset': taskformset,
+        'taskform': taskform,
         'DEBUG': settings.DEBUG,
     }
-    return render(request, "data/menu_entry.html", context)
+    return render(request, "data/task_entry.html", context)
 
 @login_required(login_url="/login/")
 def log_event(request, task_id):
     task = Task.objects.get(id=task_id, user_id=request.user.id)
-    url = "/menuentry/{}".format(menu_id)
+    url = "/taskentry/{}".format(task_id)
     event = EventLog(task_id=task.id, name="timeout")
     event.save()
     return redirect(url)

@@ -13,7 +13,7 @@ def get_tasks(self):
     unfinished = []
     finished = []
     for image in Image.objects.all():
-        task, created = Task.objects.get_or_create(user=self.id, image=image.id)
+        task = Task.objects.get(user_id=self.id, image_id=image.id)
         if task.finished == 1:
             finished.append(task)
         else:

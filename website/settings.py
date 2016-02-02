@@ -126,7 +126,7 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-LOGIN_REDIRECT_URL = '/menus'
+LOGIN_REDIRECT_URL = '/images'
 LOGIN_URL = '/login'
 
 EMAIL_USE_TLS = True
