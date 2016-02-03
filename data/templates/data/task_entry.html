@@ -10,28 +10,44 @@
             <img class="img-responsive" src="{{ task.image.get_url }}">
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="panel-heading">
-                    <div class="col-xs-6">{{ taskform.address }}</div>
-                    <div class="col-xs-4">{{ taskform.month }} {{ taskform.year }}</div>
-                </div>
-            </div>
-        </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-xs-6">
-            {{ taskform }}
+    <div class="row">
+        <div class="col-xs-12">
+            {{ taskform.non_field_errors }}
         </div>
     </div>
     <div class="row">
-    <div class="panel-footer">
-        <button class="btn btn-info" type="submit" name="action" value="+">Save</button>
-        <input class="btn btn-success" type="submit" name="action" value="submit">
-        <input id="entryLogBtn" type="submit" name="action" value="log">
+        <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label for="{{ taskform.street.id_for_label }}">Street:</label>{{ taskform.street }}{% if taskform.street.errors %}*{% endif %}
+                <label for="{{ taskform.citystate.id_for_label}}">City:</label>{{ taskform.citystate }}{% if taskform.city.errors %}*{% endif %}
+                Month/Year:
+                    <label for="{{ taskform.month.id_for_label }}"></label>{{ taskform.month }}{% if taskform.month.errors %}*{% endif %}
+                    <label for="{{ taskform.year.id_for_label}}"></label>{{ taskform.year }}{% if taskform.month.errors %}*{% endif %}
+                    <label for="{{ taskform.pic_quality.id_for_label }}">The quality of the actual picture is high:</label>
+                    {{ taskform.pic_quality }}{% if field.errors %}*{% endif %}
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                {% for field in taskform %}
+                {% if forloop.counter > 5 %}
+                {% if not forloop.counter0|divisibleby:"2" %}<tr>{% endif %}
+                    <td>{{ field.label_tag }}</td>
+                    <td>{{ field }}{% if field.errors %}*{% endif %}</td>
+                {% if forloop.counter0|divisibleby:"2" %}</tr>{% endif %}
+                {% endif %}
+                {% endfor %}
+                </table>
+            </div>
+
+            <div class="panel-footer">
+                <button class="btn btn-info" type="submit" name="action" value="save">Save</button>
+                <input class="btn btn-success" type="submit" name="action" value="submit">
+                <input id="entryLogBtn" type="submit" name="action" value="log">
+            </div>
+        </div>
+        </div>
     </div>
-</div>
 </form>
 
 {% include "includes/time.html" %}

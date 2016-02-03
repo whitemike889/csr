@@ -75,22 +75,61 @@ class Task(models.Model):
 
     user = models.ForeignKey(User)
     image = models.ForeignKey(Image)
-    address = models.CharField('Street Address', max_length=768, null=True)
     finished = models.IntegerField(choices=CHOICES, default=0)
+
+
+    street = models.CharField('Street Address', max_length=768, null=True)
+    citystate = models.CharField("City, State", max_length=512, null=True)
     month = models.IntegerField(choices=MONTHS, null=True)
     year = models.IntegerField(choices=YEARS, null=True)
-    pic_quality = models.IntegerField("Picture Quality", choices=LIKERT, null=True)
-    str_quality = models.IntegerField("Street Quality", choices=LIKERT, null=True)
-    pot_holes = models.IntegerField("Pot Holes", choices=NUMBERS, null=True)
-    bui_quality = models.IntegerField("Building Quality", choices=LIKERT, null=True)
-    car_quality = models.IntegerField("Car Quality", choices=LIKERT, null=True)
-    litter = models.IntegerField(choices=LIKERT, null=True)
-    road_work = models.IntegerField("Road Work", choices=CHOICES, null=True)
-    for_sale = models.IntegerField("Houses for sale signs", choices=CHOICES, null=True)
-    shoes = models.IntegerField("Shoes on wire", choices=CHOICES, null=True)
-    people = models.IntegerField("People actively covering faces", choices=CHOICES, null=True)
-    broken_signs = models.IntegerField("Broken Street Signs", choices=CHOICES, null=True)
-    trees = models.IntegerField(choices=CHOICES, null=True)
+    pic_quality = models.IntegerField(
+            "The quality of the actual picture is high",
+            choices=LIKERT, null=True
+    )
+    str_quality = models.IntegerField(
+            "The quality of the streets visible in the picture is high",
+            choices=LIKERT, null=True
+    )
+    pot_holes = models.IntegerField(
+            "How many potholes are visible in the picture",
+            choices=NUMBERS, null=True
+    )
+    bui_quality = models.IntegerField(
+            "The quality of buildings visible in the picture is high",
+            choices=LIKERT, null=True
+    )
+    car_quality = models.IntegerField(
+            "The quality of the cars visible in the picture is high",
+            choices=LIKERT, null=True
+    )
+    litter = models.IntegerField(
+            "The amount of litter visible in the picture is high",
+            choices=LIKERT, null=True
+    )
+    road_work = models.IntegerField(
+            "Are there signs of road work visible in the picture",
+            choices=CHOICES, null=True
+    )
+    for_sale = models.IntegerField(
+            "There are one more house for sale signs visible in the picture",
+            choices=CHOICES, null=True
+    )
+    shoes = models.IntegerField(
+            "Are there shoes on a wire visible in the picture",
+            choices=CHOICES, null=True
+    )
+    people = models.IntegerField(
+            "Are there people actively covering their faces visible in the picture",
+            choices=CHOICES, null=True
+    )
+    broken_signs = models.IntegerField(
+            "Are there any broken street signs visible in the picture",
+            choices=CHOICES, null=True
+    )
+    trees = models.IntegerField(
+            "Are there trees visible in the picture",
+            choices=CHOICES, null=True
+    )
 
     timestarted = models.DateTimeField(default=get_now)
     timefinished = models.DateTimeField(null=True, blank=True)
@@ -102,7 +141,7 @@ class Task(models.Model):
         super(Task, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.address or self.image.filename
+        return self.street or self.image.filename
 
 def get_now():
     return timezone.now()

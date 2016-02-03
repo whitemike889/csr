@@ -32,18 +32,33 @@ def field_widget_callback(field):
 
 @timeout_logging
 def task_entry(request, task_id):
+    fields = [
+        'street', 'citystate', 'pic_quality', 'str_quality', 'pot_holes',
+        'bui_quality', 'car_quality', 'litter', 'road_work', 'for_sale',
+        'shoes', 'people', 'broken_signs', 'trees',
+    ]
     inactive = 0
     task = Task.objects.get(id=task_id, user_id=request.user.id)
-    TaskForm = modelform_factory(Task, exclude=['id', 'image', 'user'])
+    TaskForm = modelform_factory(Task, exclude=['id', 'image', 'user', 'finished', 'timestarted', 'timefinished',])
     # Evaluate which form the post came from.  If from timer, then repopulate with request.DATA
     # else save it per usual
     if request.method == "POST":
-        print "GUID: {}".format(request.POST['seconds'])
+        print "Token: {}".format(request.POST['token'])
         taskform = TaskForm(request.POST, request.FILES, instance=task)
-        if request.POST['action'] == "+" or request.POST['action'] == "submit":
+        if request.POST['action'] == "save":
+            for f in fields:
+                val = request.POST[f]
+                if val != '':
+                    if f != 'street' and f != 'citystate':
+                        val = int(val)
+                    setattr(task,f, val)
+            task.save()
+        if request.POST['action'] == "submit":
             if taskform.is_valid():
                 taskform.save()
                 if request.POST['action'] == "submit":
+                    task.finished = 1
+                    task.save()
                     return HttpResponseRedirect(reverse('data:images'))
 
         if request.POST['action'] == "log":
