@@ -2,41 +2,30 @@
 
 {% block content %}
 <div class="container">
-
 {% if user.is_authenticated %}
     <form method="post" id="taskform" action="">
     {% csrf_token %}
+    <div class="row">
+        <div class="col-xs-12">
+            <img class="img-responsive" src="{{ task.image.get_url }}">
+        </div>
+    </div>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <a href="{{ task.image.get_url }}" target="_blank">View Menu</a>
-        </div>
-        <div class="panel-body form-inline">
-            <div class="form-group">
-                {{ taskform }}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel-heading">
+                    <div class="col-xs-6">{{ taskform.address }}</div>
+                    <div class="col-xs-4">{{ taskform.month }} {{ taskform.year }}</div>
+                </div>
             </div>
         </div>
-    <table class="table">
-        {{ itemformset.management_form }}
-        {% for form in itemformset %}
-        <tr><td class="form-inline">
-            {% for field in form %}
-            {% if not forloop.last %}
-            <div class="form-group">
-                <label class="sr-only" for="{{ field.id_for_label }}">{{ field.name }}</label>
-                {{ field }}
-            </div>
-            {% else %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">delete</label>
-                {{ field }}
-            </div>
-            {% endif %}
-            {% endfor %}
-                {% if form.errors %}<span class="text-danger">Missing Fields</span>{% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-6">
+            {{ taskform }}
+        </div>
+    </div>
+    <div class="row">
     <div class="panel-footer">
         <button class="btn btn-info" type="submit" name="action" value="+">Save</button>
         <input class="btn btn-success" type="submit" name="action" value="submit">
