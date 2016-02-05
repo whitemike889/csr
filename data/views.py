@@ -31,19 +31,18 @@ def field_widget_callback(field):
     return forms.TextInput(attrs={'placeholder': field.name})
 
 @timeout_logging
-def task_entry(request, task_id):
+def task_entry(request, image_id):
     fields = [
-        'street', 'citystate', 'pic_quality', 'str_quality', 'pot_holes',
+        'month','year','street', 'citystate', 'pic_quality', 'str_quality', 'pot_holes',
         'bui_quality', 'car_quality', 'litter', 'road_work', 'for_sale',
         'shoes', 'people', 'broken_signs', 'trees',
     ]
     inactive = 0
-    task = Task.objects.get(id=task_id, user_id=request.user.id)
+    task, created = Task.objects.get_or_create(image_id=image_id, user_id=request.user.id)
     TaskForm = modelform_factory(Task, exclude=['id', 'image', 'user', 'finished', 'timestarted', 'timefinished',])
     # Evaluate which form the post came from.  If from timer, then repopulate with request.DATA
     # else save it per usual
     if request.method == "POST":
-        print "Token: {}".format(request.POST['token'])
         taskform = TaskForm(request.POST, request.FILES, instance=task)
         if request.POST['action'] == "save":
             for f in fields:
@@ -77,8 +76,8 @@ def task_entry(request, task_id):
     return render(request, "data/task_entry.html", context)
 
 @login_required(login_url="/login/")
-def log_event(request, task_id):
-    task = Task.objects.get(id=task_id, user_id=request.user.id)
+def log_event(request, image_id):
+    task = Task.objects.get(image_id=image_id, user_id=request.user.id)
     url = "/taskentry/{}".format(task_id)
     event = EventLog(task_id=task.id, name="timeout")
     event.save()

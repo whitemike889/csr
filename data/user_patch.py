@@ -10,15 +10,22 @@ def get_billable_hours(self):
 User.add_to_class('get_billable_hours', get_billable_hours)
 
 def get_tasks(self):
+    notStarted = []
     unfinished = []
+    sIds = []
     finished = []
-    for image in Image.objects.all():
-        task = Task.objects.get(user_id=self.id, image_id=image.id)
+    for task in Task.objects.filter(user_id=self.id):
         if task.finished == 1:
             finished.append(task)
         else:
             unfinished.append(task)
-    return dict(unfinished=unfinished, finished=finished)
+        sIds.append(task.image.id)
+
+    for image in Image.objects.all():
+        if image.id not in sIds:
+            notStarted.append(image)
+
+    return dict(notStarted=notStarted, unfinished=unfinished, finished=finished)
 
 User.add_to_class('get_tasks', get_tasks)
 

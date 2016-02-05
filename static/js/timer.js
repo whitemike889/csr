@@ -10,10 +10,15 @@ var workTimerThreshold = 30; //seconds
 var logOutThreshold = 120; //seconds
 secondsInput.type = "hidden";
 tokenInput.type="hidden";
-
+var modalBtn = document.getElementById('modalBtn')
+var inactive = document.getElementById('inactive').value
 
 
 $(document).ready(function () {
+
+    if (inactive == 1){
+        $( modalBtn ).click()
+    }
 
     checkModal( function (pause) {
         if ( pause ) {

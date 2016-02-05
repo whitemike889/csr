@@ -21,7 +21,7 @@ class Image(models.Model):
         return status
 
     def __str__(self):
-        return self.get_url()
+        return self.filename
 
 class WorkTimer(models.Model):
     user = models.ForeignKey(User)
@@ -35,7 +35,7 @@ class Task(models.Model):
         (2, "Disagree"),
         (3, "Neither Agree or Disagree"),
         (4, "Agree"),
-        (5, "Stronly Agree"),
+        (5, "Strongly Agree"),
         (6, "N/A"),
     )
 
@@ -99,7 +99,7 @@ class Task(models.Model):
             choices=LIKERT, null=True
     )
     car_quality = models.IntegerField(
-            "The quality of the cars visible in the picture is high",
+            "The quality of the vehicles visible in the picture is high",
             choices=LIKERT, null=True
     )
     litter = models.IntegerField(
@@ -110,6 +110,10 @@ class Task(models.Model):
             "Are there signs of road work visible in the picture",
             choices=CHOICES, null=True
     )
+    graffiti = models.IntegerField(
+            "Is there graffiti visible in the picture",
+            choices=CHOICES, null=True
+    )
     for_sale = models.IntegerField(
             "There are one more house for sale signs visible in the picture",
             choices=CHOICES, null=True
@@ -118,16 +122,16 @@ class Task(models.Model):
             "Are there shoes on a wire visible in the picture",
             choices=CHOICES, null=True
     )
-    people = models.IntegerField(
-            "Are there people actively covering their faces visible in the picture",
+    trees = models.IntegerField(
+            "Are there trees or large bushes visible in the picture",
             choices=CHOICES, null=True
     )
     broken_signs = models.IntegerField(
             "Are there any broken street signs visible in the picture",
             choices=CHOICES, null=True
     )
-    trees = models.IntegerField(
-            "Are there trees visible in the picture",
+    people = models.IntegerField(
+            "Are there people actively covering their faces visible in the picture",
             choices=CHOICES, null=True
     )
 
@@ -141,7 +145,13 @@ class Task(models.Model):
         super(Task, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.street or self.image.filename
+        if self.street:
+            y = "{}-".format(self.year) if self.year else ""
+            m = self.month if self.month else ""
+            return "{} {}{}".format(self.street, y, m)
+        else:
+            return self.image.filename
+
 
 def get_now():
     return timezone.now()
