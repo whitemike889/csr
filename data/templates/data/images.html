@@ -9,31 +9,39 @@
     </div>
     <div class="row">
         <div class="col-xs-6 col-sm-4 col-md-4">
-            <h4>Incomplete</h4>
-            <ul class="list-group">
-            {% for task in images.unfinished %}
-                <li class='list-group-item'>
-                    <span class="badge">In progress</span>
-                    <a href="{% url 'data:task_entry' task.image.id %}">{{ task }}</a>
-                </li>
-            {% endfor %}
-            {% for image in images.notStarted %}
-                <li class='list-group-item'>
-                    <a href="{% url 'data:task_entry' image.id %}">{{ image }}</a>
-                </li>
-            {% endfor %}
-            </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Incomplete</h4>
+                </div>
+                <ul class="list-group pre-scrollable">
+                    {% for task in images.unfinished %}
+                    <li class='list-group-item'>
+                        <span class="badge">In progress</span>
+                        <a href="{% url 'data:task_entry' task.image.id %}">{{ task }}</a>
+                    </li>
+                    {% endfor %}
+                    {% for image in images.notStarted %}
+                    <li class='list-group-item'>
+                        <a href="{% url 'data:task_entry' image.id %}">{{ image }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div><!-- /.col-md-8 -->
         <div class="col-xs-6 col-sm-4 col-md-4">
-            <h4>Complete</h4>
-            <ul class='list-group'>
-            {% for task in images.finished %}
-                <li class="list-group-item">
-                    <span class="badge">Complete</span>
-                    <a href="{% url 'data:task_entry' task.image.id %}">{{ task }}</a>
-                </li>
-            {% endfor %}
-            </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Complete</h4>
+                </div>
+                <ul class='list-group pre-scrollable'>
+                {% for task in images.finished %}
+                    <li class="list-group-item">
+                        <span class="badge">Complete</span>
+                        <a href="{% url 'data:task_entry' task.image.id %}">{{ task }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
         </div>
         {% include "data/includes/info.html" %}
     </div><!-- /.row -->

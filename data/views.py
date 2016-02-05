@@ -54,11 +54,9 @@ def task_entry(request, image_id):
             task.save()
         if request.POST['action'] == "submit":
             if taskform.is_valid():
-                taskform.save()
-                if request.POST['action'] == "submit":
-                    task.finished = 1
-                    task.save()
-                    return HttpResponseRedirect(reverse('data:images'))
+                task.finished = 1
+                task.save()
+                return HttpResponseRedirect(reverse('data:images'))
 
         if request.POST['action'] == "log":
             inactive = 1
