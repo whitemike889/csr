@@ -44,12 +44,5 @@
   </div>
 </div>
 
-<script>
-
-if ({{ inactive }}  == 1) {
-    document.getElementById('modalBtn').click()
-
-}
-</script>
-
+<input id="inactive" type="hidden" value="{{ inactive }}">
 <script src="{% static 'js/timer.js' %}"></script>

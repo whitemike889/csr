@@ -10,8 +10,8 @@ class TimeSheet(User):
 
 @admin.register(WorkTimer)
 class WorkTimerAdmin(admin.ModelAdmin):
-    list_display = ('get_username', 'token', 'value')
-    readonly_fields = ('user',)
+    list_display = ('get_username', 'token', 'value', 'timestamp',)
+    readonly_fields = ('user','timestamp')
     search_fields = ['user__username']
     def get_username(self, i):
         return i.user.username
