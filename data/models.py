@@ -134,7 +134,6 @@ class Task(models.Model):
     timestarted = models.DateTimeField(default=get_now)
     timefinished = models.DateTimeField(null=True, blank=True)
 
-    ## WRITE A VIEW TO OVERRIDE SAVE FUNCTION THAT CHECKS IF FINISHED IS MARKED!
     def save(self, *args, **kwargs):
         if self.finished == 1 and self.timefinished == None:
             self.timefinished = get_now()
