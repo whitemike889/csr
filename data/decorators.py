@@ -4,7 +4,11 @@ from django.utils import timezone
 import datetime
 
 def check_for_spam(user_id, seconds):
-    worktimer = WorkTimer.objects.filter(user_id=user_id).order_by('-timestamp')[0]
+    try:
+        worktimer = WorkTimer.objects.filter(user_id=user_id).order_by('-timestamp')[0]
+    except IndexError:
+        return False
+
     if timezone.now() - worktimer.timestamp < datetime.timedelta(0,30) and int(seconds) == int(worktimer.value):
         return True
     else:
