@@ -115,7 +115,7 @@ class Task(models.Model):
             choices=CHOICES, null=True
     )
     for_sale = models.IntegerField(
-            "There are one more house for sale signs visible in the picture",
+            "There are one or more house for sale signs visible in the picture",
             choices=CHOICES, null=True
     )
     shoes = models.IntegerField(

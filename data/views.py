@@ -52,6 +52,7 @@ def task_entry(request, image_id):
                         val = int(val)
                     setattr(task,f, val)
             task.save()
+            taskform = TaskForm(instance=task)
         if request.POST['action'] == "submit":
             if taskform.is_valid():
                 task.finished = 1

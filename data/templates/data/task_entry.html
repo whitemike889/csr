@@ -21,11 +21,11 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-12">
-                        <label for="{{ taskform.street.id_for_label }}">Street:</label>{{ taskform.street }}
+                        <label for="{{ taskform.street.id_for_label }}">Street Address:</label>{{ taskform.street }}
                         <label for="{{ taskform.citystate.id_for_label}}">City:</label>{{ taskform.citystate }}
                         Month/Year:
-                        <label for="{{ taskform.month.id_for_label }}"></label>{{ taskform.month }}{% if taskform.month.errors %}*{% endif %}
-                        <label for="{{ taskform.year.id_for_label}}"></label>{{ taskform.year }}{% if taskform.month.errors %}*{% endif %}
+                        <label for="{{ taskform.month.id_for_label }}"></label>{{ taskform.month }}
+                        <label for="{{ taskform.year.id_for_label}}"></label>{{ taskform.year }}
                     </div>
                 </div>
                 <div class="row">
@@ -35,6 +35,13 @@
                     </div>
                 </div>
             </div>
+            {% if taskform.errors %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-danger">All required fields have not been entered, form has not been submitted.</div>
+                </div>
+            </div>
+            {% endif %}
             <div class="panel-body">
                 <table class="table">
                 {% for field in taskform %}
