@@ -37,9 +37,9 @@ class BillableHoursAdmin(admin.ModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-
+    list_display = ('user', 'image')
     readonly_fields = ('user', 'image',)
-
+    search_fields = ['user__username']
 @admin.register(EventLog)
 class EventLog(admin.ModelAdmin):
     list_display = ('get_username', 'name', 'timestamp',)
