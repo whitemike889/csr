@@ -25,6 +25,7 @@ class Image(models.Model):
 
 class WorkTimer(models.Model):
     user = models.ForeignKey(User)
+    task = models.ForeignKey("Task", null=True)
     value = models.IntegerField()
     token = models.CharField(max_length=256)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -156,7 +157,8 @@ def get_now():
     return timezone.now()
 
 class EventLog(models.Model):
-    task = models.ForeignKey(Task)
+    user = models.ForeignKey(User)
+    task = models.ForeignKey(Task, null=True)
     name = models.CharField(max_length=256)
     description = models.CharField(max_length=512, blank=True)
     timestamp = models.DateTimeField(default=get_now)

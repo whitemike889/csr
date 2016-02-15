@@ -9,3 +9,4 @@ postgres
 .DS_Store
 csr_task_images
 export
+pgbackups

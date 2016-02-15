@@ -15,7 +15,7 @@ def check_for_spam(user_id, seconds):
         return False
 
 def timeout_logging(view_func):
-    def _wrapped_view_func(request, image_id, *args, **kwargs):
+    def _wrapped_view_func(request, image_id=None, *args, **kwargs):
         if not request.user.is_authenticated():
             return render(request, 'login.html', {'message': "logged out due to inactivity"})
         if request.method == "POST":
@@ -23,8 +23,16 @@ def timeout_logging(view_func):
             print request.POST['seconds']
             if not check_for_spam(request.user.id, request.POST['seconds']):
                 worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, value=request.POST['seconds'], token=request.POST['token'])
-            task = Task.objects.get(user_id=request.user.id, image_id=image_id)
-            eventlog = EventLog(task_id=task.id, name=request.POST['action'])
+            if image_id:
+                task = Task.objects.get(user_id=request.user.id, image_id=image_id)
+                worktimer.task_id = task.id
+                worktimer.save()
+                eventlog = EventLog(user_id=request.user.id, task_id=task.id, name=request.POST['action'])
+            else:
+                eventlog = EventLog(user_id=request.user.id, name=request.POST['action'])
             eventlog.save()
-        return view_func(request, image_id, *args, **kwargs)
+        if image_id:
+            return view_func(request, image_id, *args, **kwargs)
+        else:
+            return view_func(request, *args, **kwargs)
     return _wrapped_view_func

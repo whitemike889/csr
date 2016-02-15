@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth.models import User
 from data.models import Task, WorkTimer, EventLog
 from django.conf import settings
 import csv, os
@@ -8,6 +9,8 @@ class Command(BaseCommand):
 
     def get_headers(self, model):
         headers = []
+        if model._meta.object_name != "EventLog" and model._meta.object_name != "User":
+            headers.append('user')
         q = model.objects.values()[0]
         for key, value in  q.items():
             headers.append(key)
@@ -35,6 +38,9 @@ class Command(BaseCommand):
 
         workFile = os.path.join(exportDir, 'worktimer.csv')
         self.write_csv(workFile, WorkTimer)
+
+        userFile = os.path.join(exportDir, "user.csv")
+        self.write_csv(userFile, User)
 
 
 

@@ -29,3 +29,8 @@ def get_tasks(self):
 
 User.add_to_class('get_tasks', get_tasks)
 
+def __str__(self):
+    return self.username
+
+User.add_to_class('__str__', __str__)
+

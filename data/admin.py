@@ -42,7 +42,7 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ['user__username']
 @admin.register(EventLog)
 class EventLog(admin.ModelAdmin):
-    list_display = ('get_username', 'name', 'timestamp',)
+    list_display = ('get_username', 'name', 'user_id', 'timestamp',)
 
     def get_username(self, x):
-        return x.task.user.username
+        return x.user.username
