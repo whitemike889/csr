@@ -20,7 +20,7 @@ def timeout_logging(view_func):
             return render(request, 'login.html', {'message': "logged out due to inactivity"})
         if request.method == "POST":
             if image_id:
-                task = Task.object.get(user_id=request.user.id, image_id=image_id)
+                task = Task.objects.get(user_id=request.user.id, image_id=image_id)
                 eventlog = EventLog(user_id=request.user.id, task_id=task.id, name=request.POST['action'])
                 if not check_for_spam(request.user.id, request.POST['seconds']):
                     worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, task_id=task.id, value=request.POST['seconds'], token=request.POST['token'])

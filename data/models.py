@@ -165,10 +165,10 @@ class Task(models.Model):
         super(Task, self).save(*args, **kwargs)
 
     def __str__(self):
-        if self.street:
+        if self.street_num and self.street_nam:
             y = "{}-".format(self.year) if self.year else ""
             m = self.month if self.month else ""
-            return "{} {}{}".format(self.street, y, m)
+            return "{} {} {}{}".format(self.street_num, self.street_nam, y, m)
         else:
             return self.image.filename
 
