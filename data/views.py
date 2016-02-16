@@ -21,15 +21,24 @@ def index(request):
 
 @login_required(login_url="/login/")
 def list_images(request):
+    try:
+        referer = request.META["HTTP_REFERER"]
+    except KeyError:
+        referer = "DNE"
+    if "/login/" in referer:
+        clickmodal = "yes"
+    else:
+        clickmodal = None
     images = request.user.get_tasks()
     context = {
         'images': images,
+        'clickmodal': clickmodal,
     }
     return render(request, "data/images.html", context)
 
 
 def my_login(request, *args, **kwargs):
-    kwargs = {'template_name': "login.html"}
+    kwargs = {'template_name': "login.html",}
     response = auth_views.login(request, **kwargs)
     if response.status_code == 302:
         user = User.objects.get(username=request.POST['username'])
