@@ -134,3 +134,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv('admin_email')
 EMAIL_HOST_PASSWORD = os.getenv('admin_password')
 EMAIL_PORT = 587
+
+#12 hour session cookie
+SESSION_COOKIE_AGE = 60 * 60 * 12
