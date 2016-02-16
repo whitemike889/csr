@@ -39,9 +39,10 @@ def my_login(request, *args, **kwargs):
 
 def my_logout(request, *args, **kwargs):
     description = request.GET.get('message', '')
-    if request.user.id:
-        event = EventLog(user_id=request.user.id, name="logout", description=description)
-        event.save()
+    if not request.user.is_authenticated():
+        return render(request, 'login.html', {'message': "logged out due to inactivity"})
+    event = EventLog(user_id=request.user.id, name="logout", description=description)
+    event.save()
     return auth_views.logout(request, next_page="/")
 
 def field_widget_callback(field):
