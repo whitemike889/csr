@@ -9,7 +9,7 @@ def check_for_spam(user_id, seconds):
     except IndexError:
         return False
 
-    if timezone.now() - worktimer.timestamp < datetime.timedelta(0,30) and int(seconds) == int(worktimer.value):
+    if timezone.now() - worktimer.timestamp < datetime.timedelta(0,29) and int(seconds) == int(worktimer.value):
         return True
     else:
         return False
@@ -19,13 +19,11 @@ def timeout_logging(view_func):
         if not request.user.is_authenticated():
             return render(request, 'login.html', {'message': "logged out due to inactivity"})
         if request.method == "POST":
-            if not check_for_spam(request.user.id, request.POST['seconds']):
-                worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, value=request.POST['seconds'], token=request.POST['token'])
             if image_id:
-                task = Task.objects.get(user_id=request.user.id, image_id=image_id)
-                worktimer.task_id = task.id
-                worktimer.save()
+                task = Task.object.get(user_id=request.user.id, image_id=image_id)
                 eventlog = EventLog(user_id=request.user.id, task_id=task.id, name=request.POST['action'])
+                if not check_for_spam(request.user.id, request.POST['seconds']):
+                    worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, task_id=task.id, value=request.POST['seconds'], token=request.POST['token'])
             else:
                 eventlog = EventLog(user_id=request.user.id, name=request.POST['action'])
             eventlog.save()
