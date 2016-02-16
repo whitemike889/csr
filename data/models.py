@@ -72,6 +72,24 @@ class Task(models.Model):
         (12, "Dec"),
     )
 
+    states = [
+        "AL", "AK", "AZ", "AR", "CA",
+        "CO", "CT", "DC", "DE", "FL",
+        "GA", "HI", "ID", "IL", "IN",
+        "IA", "KS", "KY", "LA", "ME",
+        "MD", "MA", "MI", "MN", "MS",
+        "MO", "MT", "NE", "NV", "NH",
+        "NJ", "NM", "NY", "NC", "ND",
+        "OH", "OK", "OR", "PA", "RI",
+        "SC", "SD", "TN", "TX", "UT",
+        "VT", "VA", "WA", "WV", "WI",
+        "WY",
+    ]
+    states2 = []
+    for state in states:
+        states2.append((state, state))
+
+
     YEARS = [(x,x) for x in range(2000, timezone.now().year+1)]
 
     user = models.ForeignKey(User)
@@ -79,8 +97,10 @@ class Task(models.Model):
     finished = models.IntegerField(choices=CHOICES, default=0)
 
 
-    street = models.CharField('Street Address', max_length=768, null=True)
-    citystate = models.CharField("City, State", max_length=512, null=True)
+    street_num = models.CharField('Street #', max_length=64, null=True)
+    street_nam = models.CharField('Street name', max_length=512, null=True)
+    city = models.CharField("City", max_length=512, null=True)
+    state = models.CharField("State", choices=states2, max_length=4, null=True)
     month = models.IntegerField(choices=MONTHS, null=True)
     year = models.IntegerField(choices=YEARS, null=True)
     pic_quality = models.IntegerField(
@@ -124,7 +144,7 @@ class Task(models.Model):
             choices=CHOICES, null=True
     )
     trees = models.IntegerField(
-            "Are there trees or large bushes visible in the picture",
+            "Are there trees and/or large bushes visible in the picture",
             choices=CHOICES, null=True
     )
     broken_signs = models.IntegerField(
