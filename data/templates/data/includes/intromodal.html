@@ -1,16 +1,19 @@
 
-<button hidden type="button" id="modalBtn" data-toggle="modal" data-target="#myModal">
+<button hidden type="button" id="modalBtnInfo" data-toggle="modal" data-target="#myModalInfo">
 </button>
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabelInfo">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{% lorem 3 w %}</h4>
+        <h4 class="modal-title" id="myModalLabel">TASK INSTRUCTIONS</h4>
       </div>
       <div class="modal-body">
-        {% lorem 3 p %}
+          <p>This task consists of gathering information from images. Each assignment consists of a picture of a street. (Taken from Google Streetview.) Your job is to look at the picture and fill out a web form based on what can be seen in the picture. By now, you should have already been provided with detailed information about the task. If you need to review this information, you can click on “Instructions”in the top menu.</p>
+          <p>The main page contains a list of incomplete assignments. To start working on an assignment, simply click on the filename in the left column. This will take you to the data entry screen. Once all data are entered for this assignment, click “submit” to complete. The assignment will now be listed in the middle column as “complete”.</p>
+          <p>Please keep in mind that we will only be recording billable hours while you are actually working on assignments. You will also be automatically logged out if you inactive for more than 2 minutes.</p>
+          <p>You can review this information and the task instructions at any time by clicking on “Instructions” in the top menu.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -19,11 +22,11 @@
   </div>
 </div>
 
-<input type="hidden" id="clickmodal" value="{{ clickmodal }}">
+<input type="hidden" id="clickmodalinfo" value="{{ clickmodal }}">
 
 <script>
-var modalBtn = document.getElementById('modalBtn')
-var clickmodal = document.getElementById('clickmodal').value
+var modalBtn = document.getElementById('modalBtnInfo')
+var clickmodal = document.getElementById('clickmodalinfo').value
 
 $(document).ready( function () {
     if (clickmodal == "yes")

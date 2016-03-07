@@ -60,8 +60,8 @@ def field_widget_callback(field):
 @timeout_logging
 def task_entry(request, image_id):
     fields = [
-        'month','year','street', 'citystate', 'pic_quality', 'str_quality', 'pot_holes',
-        'bui_quality', 'car_quality', 'litter', 'road_work', 'for_sale',
+        'month','year','street_num', 'street_nam',  'city', 'state', 'pic_quality', 'str_quality', 'pot_holes',
+        'bui_quality', 'car_quality', 'litter', 'road_work', 'graffiti',  'for_sale',
         'shoes', 'people', 'broken_signs', 'trees',
     ]
     inactive = 0
@@ -75,7 +75,7 @@ def task_entry(request, image_id):
             for f in fields:
                 val = request.POST[f]
                 if val != '':
-                    if f != 'street' and f != 'citystate':
+                    if f != 'street_nam' and f != 'city' and f != 'state':
                         val = int(val)
                     setattr(task,f, val)
             task.save()

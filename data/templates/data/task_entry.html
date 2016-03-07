@@ -13,6 +13,7 @@
     <div class="row">
         <div class="col-xs-12">
             {{ taskform.non_field_errors }}
+            {{ taskform.error }}
         </div>
     </div>
     <div class="row">
@@ -20,23 +21,28 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-4">
-                        <label for="{{ taskform.street_num.id_for_label }}">Street #:</label>{{ taskform.street_num }}
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <label for="{{ taskform.street_num.id_for_label }}">Street #:</label> {{ taskform.street_num }}
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4">
-                        <label for="{{ taskform.street_nam.id_for_label }}">Street name:</label>{{ taskform.street_nam }}
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <label for="{{ taskform.street_nam.id_for_label }}">Street name:</label> {{ taskform.street_nam }}
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-3">
-                        <label for="{{ taskform.city.id_for_label }}">City:</label>{{ taskform.city }}
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <label for="{{ taskform.city.id_for_label }}">City:</label> {{ taskform.city }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
-                        Month/Year:
-                        <label for="{{ taskform.month.id_for_label }}"></label>{{ taskform.month }}
-                        <label for="{{ taskform.year.id_for_label}}"></label>{{ taskform.year }}
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <label for="{{ taskform.state.id_for_label }}">State:</label> {{ taskform.state }}
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        Month/Year:
+                        <label for="{{ taskform.month.id_for_label }}"></label> {{ taskform.month }}
+                        <label for="{{ taskform.year.id_for_label}}"></label> {{ taskform.year }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-md-6">
                         <label for="{{ taskform.pic_quality.id_for_label }}">The quality of the actual picture is high:</label>
                         {{ taskform.pic_quality }}
                     </div>
@@ -65,13 +71,14 @@
             <div class="panel-footer">
                 <button class="btn btn-info" type="submit" name="action" value="save">Save</button>
                 <input class="btn btn-success" type="submit" name="action" value="submit">
-                <input id="entryLogBtn" type="submit" name="action" value="log">
+                <input {% if not DEBUG %}type='hidden'{% else %}type="submit" {% endif %} id="entryLogBtn" type="submit" name="action" value="log">
             </div>
         </div>
         </div>
     </div>
 </form>
 
+{% include "data/includes/intromodal.html" %}
 {% include "includes/time.html" %}
 
 {% else %}

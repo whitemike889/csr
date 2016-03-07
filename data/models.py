@@ -166,9 +166,9 @@ class Task(models.Model):
 
     def __str__(self):
         if self.street_num and self.street_nam:
-            y = "{}-".format(self.year) if self.year else ""
+            y = "{}".format(self.year) if self.year else ""
             m = self.month if self.month else ""
-            return "{} {} {}{}".format(self.street_num, self.street_nam, y, m)
+            return "{} {} {}-{}".format(self.street_num, self.street_nam, m, y)
         else:
             return self.image.filename
 
