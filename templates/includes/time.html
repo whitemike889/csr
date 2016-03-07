@@ -19,8 +19,7 @@
 {% endif %}
 
 
-<button hidden type="button" id="modalBtn" data-toggle="modal" data-target="#myModal">
-</button>
+<button hidden type="button" id="modalBtn" data-toggle="modal" data-target="#myModal"></button>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -45,4 +44,5 @@
 </div>
 
 <input id="inactive" type="hidden" value="{{ inactive }}">
+<input id="debug" type="hidden" value="{{ DEBUG }}">
 <script src="{% static 'js/timer.js' %}"></script>

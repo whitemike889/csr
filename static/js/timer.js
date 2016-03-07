@@ -12,6 +12,7 @@ secondsInput.type = "hidden";
 tokenInput.type="hidden";
 var modalBtn = document.getElementById('modalBtn')
 var inactive = document.getElementById('inactive').value
+var debug = document.getElementById('debug').value
 
 
 $(document).ready(function () {
@@ -74,8 +75,10 @@ function timerIncrement( pause ) {
     }
     idleTime = idleTime + 1;
 
-    document.getElementById('idleTime').innerHTML = idleTime;
-    document.getElementById("workTime").innerHTML = worktimer;
+    if (debug == 1){
+        document.getElementById('idleTime').innerHTML = idleTime;
+        document.getElementById("workTime").innerHTML = worktimer;
+    }
     if (idleTime >= logOutThreshold) {
         window.location.href = ('/logout?message=timeout')
     }
