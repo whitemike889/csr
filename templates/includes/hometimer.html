@@ -1,0 +1,28 @@
+
+{% load static %}
+<script src="{% static 'js/ifvisible.js' %}"></script>
+<script src="{% static 'js/timeme.js' %}"></script>
+
+<script type="text/javascript">
+
+TimeMe.setIdleDurationInSeconds(60);
+TimeMe.setCurrentPageName("assigments");
+TimeMe.initialize();
+
+window.onbeforeunload = function (event) {
+    var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
+    $.ajax({
+        url:'/home_timer/',
+        type:"POST",
+        data: {
+            time: timeSpentOnPage,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        }
+    });
+};
+
+
+
+
+
+</script>

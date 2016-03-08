@@ -1,7 +1,8 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponseRedirect, HttpResponse
 from .models import Image, Task, EventLog
 from django.forms.models import inlineformset_factory, modelform_factory
 from .decorators import timeout_logging
@@ -108,3 +109,11 @@ def log_event(request, image_id):
     event = EventLog(task_id=task.id, name="timeout")
     event.save()
     return redirect(url)
+
+@csrf_protect
+def home_timer(request):
+    time = request.POST['time']
+    print time
+    response = HttpResponse()
+    return response
+
