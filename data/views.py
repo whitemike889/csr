@@ -52,7 +52,7 @@ def my_logout(request, *args, **kwargs):
         return render(request, 'login.html', {'message': "logged out due to inactivity"})
     event = EventLog(user_id=request.user.id, name="logout", description=description)
     event.save()
-    return auth_views.logout(request, next_page="/")
+    return auth_views.logout(request, next_page="/", extra_context={'message': 'logged out due to inactivity'})
 
 def field_widget_callback(field):
     return forms.TextInput(attrs={'placeholder': field.name})
