@@ -33,7 +33,7 @@ $(document).ready(function () {
         checkModal(resetIdle);
     });
 
-    $(this).keypress( function (e) {
+    $(this).keydown( function (e) {
         checkModal(resetIdle);
     });
 
