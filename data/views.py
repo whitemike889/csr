@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect, HttpResponse
-from .models import Image, Task, EventLog
+from .models import Image, Task, EventLog, WorkTimer
 from django.forms.models import inlineformset_factory, modelform_factory
 from .decorators import timeout_logging
 from forms import MenuItemForm
@@ -112,8 +112,9 @@ def log_event(request, image_id):
 
 @csrf_protect
 def home_timer(request):
-    time = request.POST['time']
-    print time
+    time = round(float(request.POST['time']))
+    token = request.POST['token']
+    worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, page="home", value=int(time), token=token)
     response = HttpResponse()
     return response
 
