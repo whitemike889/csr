@@ -1,0 +1,26 @@
+
+
+Task Frames for Pilot
+=====================
+
+This version: May 5, 2016
+
+
+Frame #1: "Neutral"
+-------------------
+
+This project is for one of our clients in the private sector. Your our task is to collect data from Google Streetview snapshots and enter them into a web-form. The task is very similar to the tutorial task. If you need a reminder on the details, please click the "instructions" link in the top right corner. 
+
+
+Frame #2: "CSR/Non-pecuniary"
+-----------------------------
+
+This project is for one of our clients in the non-profit sector working with improving access to education for underprivileged children. Since we believe the client is trying to make the world a better place, we are giving them a discount on the fees we charge them. Your task is to collect data from Google Streetview snapshots and enter them into a web-form.  The task is very similar to the tutorial task. If you need a reminder on the details, please click the "instructions" link in the top right corner. 
+
+
+NOTES:
+------
+
+Need a small tutorial without task description? 
+
+
