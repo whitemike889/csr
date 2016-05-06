@@ -40,9 +40,17 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ('user', 'image')
     readonly_fields = ('user', 'image',)
     search_fields = ['user__username']
+
 @admin.register(EventLog)
 class EventLog(admin.ModelAdmin):
     list_display = ('get_username', 'name', 'user_id', 'timestamp',)
 
     def get_username(self, x):
+        return x.user.username
+
+class TreatmentAdmin(admin.ModelAdmin):
+    list_display = ('get_username')
+    search_fields = ['user__username']
+
+    def get_username(self,x):
         return x.user.username

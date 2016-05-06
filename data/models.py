@@ -6,7 +6,14 @@ def get_now():
     return timezone.now()
 # Create your models here.
 
+
+class Treatment(models.Model):
+    user = models.OneToOneField(User)
+    wage = models.CharField("Wage Rate", max_length=128)
+    tutorial = models.IntegerField(default=0)
+
 class Image(models.Model):
+    order = models.IntegerField()
     filename = models.CharField('Filename', max_length=512)
 
     def get_url(self):
@@ -22,6 +29,9 @@ class Image(models.Model):
 
     def __str__(self):
         return self.filename
+
+    class Meta:
+        ordering = ['order']
 
 class WorkTimer(models.Model):
     user = models.ForeignKey(User)
