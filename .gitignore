@@ -10,3 +10,4 @@ postgres
 csr_task_images
 export
 pgbackups
+users.csv

@@ -2,6 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
+class Constants:
+    wageDict = {}
+
+
 def get_now():
     return timezone.now()
 # Create your models here.

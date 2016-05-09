@@ -8,8 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for x in range(1,121):
-            image, created = Image.objects.get_or_create(filename="street_{}.png".format(x))
-            image.order = x
+            image, created = Image.objects.get_or_create(filename="steet_{}.png".format(x))
             image.save()
 
 
