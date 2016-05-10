@@ -1,16 +1,59 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime
 
 def get_now():
     return timezone.now()
 # Create your models here.
 
-
+class Constants:
+    workdates = {
+        '1': {
+            'start': datetime.datetime(2016, 5, 10, 0, 01),
+            'end': datetime.datetime(2016, 5, 13, 23, 59),
+            }
+        }
 class Treatment(models.Model):
     user = models.OneToOneField(User)
     wage = models.CharField("Wage Rate", max_length=128)
     tutorial = models.IntegerField(default=0)
+    timezone = models.CharField(max_length=128, null=True)
+    batch = models.CharField(max_length=64, null=True)
+    #login or day
+    assignment = models.CharField(max_length=64, null=True)
+    frameorder = models.CharField(max_length=64, null=True)
+
+    def get_access(self):
+        start = Constants.workdates[self.batch]['start']
+        end = Constants.worksdates[self.batch]['end']
+
+        start = timezone.make_aware(start, self.timezone)
+        end = timezone.make_aware(start, self.timezone)
+        today = timezone.make_aware(datetime.datetime.now(), self.timezone)
+        if today > start and today < end:
+            access = True
+        else:
+            access = False
+
+        return dict(access=access, start=start, end=end, today=today)
+
+    def get_frame(self):
+        access = self.get_access()
+        if not access['access']:
+            return False
+        if self.assignment == 'day':
+            day = access['today'] - access['start']
+            day = int(day.days)
+        if self.assigment == 'login':
+            logins = EventLog.objects.filter(user=self.user_id, name='login')
+            day = 0
+            for x in range(1,len(logins)):
+                curr = timezone.make_aware(login[x], self.timezone)
+                prev = timezone.make_aware(login[x-1], self.timezone)
+                if curr.date() != prev.date():
+                    day += 1
+        frame = self.frameorder[day]
 
 class Image(models.Model):
     order = models.IntegerField()
@@ -194,5 +237,6 @@ class EventLog(models.Model):
     description = models.CharField(max_length=512, blank=True)
     timestamp = models.DateTimeField(default=get_now)
 
-
+    class Meta:
+        ordering = ['timestamp']
 
