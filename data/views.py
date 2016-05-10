@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect, HttpResponse
-from .models import Image, Task, EventLog, WorkTimer
+from .models import Image, Task, EventLog, WorkTimer, Constants
 from django.forms.models import inlineformset_factory, modelform_factory
 from .decorators import timeout_logging
 from forms import MenuItemForm
@@ -34,6 +34,7 @@ def list_images(request):
     context = {
         'images': images,
         'clickmodal': clickmodal,
+        'frame': Constants.frames[request.user.treatment.get_frame()],
     }
     return render(request, "data/images.html", context)
 
