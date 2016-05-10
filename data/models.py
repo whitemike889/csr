@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
+import pytz
 
 def get_now():
     return timezone.now()
@@ -24,13 +25,16 @@ class Treatment(models.Model):
     assignment = models.CharField(max_length=64, null=True)
     frameorder = models.CharField(max_length=64, null=True)
 
+    def ptz(self):
+        return pytz.timezone(self.timezone)
+
     def get_access(self):
         start = Constants.workdates[self.batch]['start']
-        end = Constants.worksdates[self.batch]['end']
+        end = Constants.workdates[self.batch]['end']
 
-        start = timezone.make_aware(start, self.timezone)
-        end = timezone.make_aware(start, self.timezone)
-        today = timezone.make_aware(datetime.datetime.now(), self.timezone)
+        start = timezone.make_aware(start, self.ptz())
+        end = timezone.make_aware(start, self.ptz)
+        today = timezone.make_aware(datetime.datetime.now(), self.ptz)
         if today > start and today < end:
             access = True
         else:
@@ -49,8 +53,8 @@ class Treatment(models.Model):
             logins = EventLog.objects.filter(user=self.user_id, name='login')
             day = 0
             for x in range(1,len(logins)):
-                curr = timezone.make_aware(login[x], self.timezone)
-                prev = timezone.make_aware(login[x-1], self.timezone)
+                curr = timezone.make_aware(login[x], self.ptz)
+                prev = timezone.make_aware(login[x-1], self.ptz)
                 if curr.date() != prev.date():
                     day += 1
         frame = self.frameorder[day]
@@ -227,15 +231,15 @@ class Task(models.Model):
             return self.image.filename
 
 
-def get_now():
-    return timezone.now()
+def get_now_niave():
+    return datetime.datetime.now()
 
 class EventLog(models.Model):
     user = models.ForeignKey(User)
     task = models.ForeignKey(Task, null=True)
     name = models.CharField(max_length=256)
     description = models.CharField(max_length=512, blank=True)
-    timestamp = models.DateTimeField(default=get_now)
+    timestamp = models.DateTimeField(default=get_now_niave)
 
     class Meta:
         ordering = ['timestamp']
