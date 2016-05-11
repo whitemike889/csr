@@ -63,8 +63,8 @@ class Treatment(models.Model):
             logins = EventLog.objects.filter(user=self.user_id, name='login')
             day = 0
             for x in range(1,len(logins)):
-                curr = timezone.make_aware(login[x], self.ptz)
-                prev = timezone.make_aware(login[x-1], self.ptz)
+                curr = logins[x].timestamp.astimezone(self.ptz())
+                prev = logins[x-1].timestamp.astimezone(self.ptz())
                 if curr.date() != prev.date():
                     day += 1
         frame = self.frameorder[day]

@@ -7,7 +7,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'data:images' %}">Tasks</a></li>
             </ul>
-            {% if request.user.is_authenticated and request.user.get_access.access %}
+            {% if request.user.is_authenticated and request.user.treatment.get_access.access %}
             <ul class="nav navbar-form navbar-right">
                 <li><button class="btn btn-info" type="button" id="modalBtnInfo" data-toggle="modal" data-target="#myModalInfo">Instructions</button></li>
             </ul>
