@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime
+import pytz
 
 
 class Constants:
@@ -11,11 +13,62 @@ def get_now():
     return timezone.now()
 # Create your models here.
 
+class Constants:
+    workdates = {
+        '1': {
+            'start': datetime.datetime(2016, 5, 10, 0, 01),
+            'end': datetime.datetime(2016, 5, 13, 23, 59),
+            }
+        }
 
+    frames = {
+        '1':'This project is for one of our clients in the private sector. Your our task is to collect data from Google Streetview snapshots and enter them into a web-form. The task is very similar to the tutorial task. If you need a reminder on the details, please click the "instructions" link in the top right corner.',
+        '2':'This project is for one of our clients in the non-profit sector working with improving access to education for underprivileged children. Since we believe the client is trying to make the world a better place, we are giving them a discount on the fees we charge them. Your task is to collect data from Google Streetview snapshots and enter them into a web-form.  The task is very similar to the tutorial task. If you need a reminder on the details, please click the "instructions" link in the top right corner.'
+    }
 class Treatment(models.Model):
     user = models.OneToOneField(User)
     wage = models.CharField("Wage Rate", max_length=128)
     tutorial = models.IntegerField(default=0)
+    timezone = models.CharField(max_length=128, null=True)
+    batch = models.CharField(max_length=64, null=True)
+    #login or day
+    assignment = models.CharField(max_length=64, null=True)
+    frameorder = models.CharField(max_length=64, null=True)
+
+    def ptz(self):
+        return pytz.timezone(self.timezone)
+
+    def get_access(self):
+        start = Constants.workdates[self.batch]['start']
+        end = Constants.workdates[self.batch]['end']
+
+        start = timezone.make_aware(start, self.ptz())
+        end = timezone.make_aware(end, self.ptz())
+        today = timezone.make_aware(datetime.datetime.now(), self.ptz())
+        if today > start and today < end:
+            access = True
+        else:
+            access = False
+
+        return dict(access=access, start=start, end=end, today=today)
+
+    def get_frame(self):
+        access = self.get_access()
+        if not access['access']:
+            return False
+        if self.assignment == 'day':
+            day = access['today'] - access['start']
+            day = int(day.days)
+        if self.assignment == 'login':
+            logins = EventLog.objects.filter(user=self.user_id, name='login')
+            day = 0
+            for x in range(1,len(logins)):
+                curr = timezone.make_aware(login[x], self.ptz)
+                prev = timezone.make_aware(login[x-1], self.ptz)
+                if curr.date() != prev.date():
+                    day += 1
+        frame = self.frameorder[day]
+        return frame
 
 class Image(models.Model):
     order = models.IntegerField()
@@ -189,15 +242,15 @@ class Task(models.Model):
             return self.image.filename
 
 
-def get_now():
-    return timezone.now()
+def get_now_niave():
+    return datetime.datetime.now()
 
 class EventLog(models.Model):
     user = models.ForeignKey(User)
     task = models.ForeignKey(Task, null=True)
     name = models.CharField(max_length=256)
     description = models.CharField(max_length=512, blank=True)
-    timestamp = models.DateTimeField(default=get_now)
+    timestamp = models.DateTimeField(default=get_now_niave)
 
-
-
+    class Meta:
+        ordering = ['timestamp']

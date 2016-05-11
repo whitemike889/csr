@@ -3,9 +3,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect, HttpResponse
-from .models import Image, Task, EventLog, WorkTimer
+from .models import Image, Task, EventLog, WorkTimer, Constants
 from django.forms.models import inlineformset_factory, modelform_factory
-from .decorators import timeout_logging
+from .decorators import timeout_logging, check_access
 from forms import MenuItemForm
 from django.db import models
 from django import forms
@@ -21,6 +21,7 @@ def index(request):
     return HttpResponseRedirect(reverse('data:images'))
 
 @login_required(login_url="/login/")
+@check_access
 def list_images(request):
     try:
         referer = request.META["HTTP_REFERER"]
@@ -34,6 +35,7 @@ def list_images(request):
     context = {
         'images': images,
         'clickmodal': clickmodal,
+        'frame': Constants.frames[request.user.treatment.get_frame()],
     }
     return render(request, "data/images.html", context)
 
@@ -60,6 +62,8 @@ def field_widget_callback(field):
 
 @timeout_logging
 def task_entry(request, image_id):
+    if not request.user.treatment.get_access()['access']:
+        redirect('unauthorized')
     fields = [
         'month','year','street_num', 'street_nam',  'city', 'state', 'pic_quality', 'str_quality', 'pot_holes',
         'bui_quality', 'car_quality', 'litter', 'road_work', 'graffiti',  'for_sale',
@@ -117,4 +121,11 @@ def home_timer(request):
     worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, page="home", value=int(time), token=token)
     response = HttpResponse()
     return response
+
+
+def unauthorized(request):
+    context = {
+        'user':request.user,
+    }
+    return render(request, "data/unauthorized.html", context)
 

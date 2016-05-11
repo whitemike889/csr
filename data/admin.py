@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import WorkTimer, Task, EventLog
+from .models import WorkTimer, Task, EventLog, Treatment
 from django.contrib.auth.models import User
 import user_patch
 # Register your models here.
@@ -48,8 +48,9 @@ class EventLog(admin.ModelAdmin):
     def get_username(self, x):
         return x.user.username
 
+@admin.register(Treatment)
 class TreatmentAdmin(admin.ModelAdmin):
-    list_display = ('get_username')
+    list_display = ('get_username',)
     search_fields = ['user__username']
 
     def get_username(self,x):

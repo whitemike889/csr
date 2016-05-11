@@ -1,5 +1,5 @@
 from .models import Image, Task, WorkTimer, EventLog
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 import datetime
 
@@ -29,6 +29,15 @@ def timeout_logging(view_func):
             eventlog.save()
         if image_id:
             return view_func(request, image_id, *args, **kwargs)
+        else:
+            return view_func(request, *args, **kwargs)
+    return _wrapped_view_func
+
+
+def check_access(view_func):
+    def _wrapped_view_func(request, image_id=None, *args, **kwargs):
+        if not request.user.treatment.get_access()['access']:
+            return redirect('/unauthorized/')
         else:
             return view_func(request, *args, **kwargs)
     return _wrapped_view_func
