@@ -16,8 +16,8 @@ def get_now():
 class Constants:
     workdates = {
         '1': {
-            'start': datetime.datetime(2016, 5, 10, 0, 01),
-            'end': datetime.datetime(2016, 5, 13, 23, 59),
+            'start': datetime.datetime(2016, 5, 13, 0, 01),
+            'end': datetime.datetime(2016, 5, 16, 23, 59),
             }
         }
 
@@ -65,8 +65,11 @@ class Treatment(models.Model):
             for x in range(1,len(logins)):
                 curr = logins[x].timestamp.astimezone(self.ptz())
                 prev = logins[x-1].timestamp.astimezone(self.ptz())
+                if not(curr >= access['start'] and curr <= access['end'] and prev >= access['start'] and prev <= access['end']):
+                    continue
                 if curr.date() != prev.date():
                     day += 1
+        print "logins: {}".format(day)
         frame = self.frameorder[day]
         return frame
 
