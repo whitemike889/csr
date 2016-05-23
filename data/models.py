@@ -16,8 +16,8 @@ def get_now():
 class Constants:
     workdates = {
         '1': {
-            'start': datetime.datetime(2016, 5, 13, 0, 01),
-            'end': datetime.datetime(2016, 5, 16, 23, 59),
+            'start': datetime.datetime(2016, 5, 19, 0, 01),
+            'end': datetime.datetime(2016, 5, 22, 23, 59),
             }
         }
 
@@ -254,6 +254,7 @@ class EventLog(models.Model):
     name = models.CharField(max_length=256)
     description = models.CharField(max_length=512, blank=True)
     timestamp = models.DateTimeField(default=get_now_niave)
+    frame = models.CharField(max_length=64, null=True)
 
     class Meta:
         ordering = ['timestamp']

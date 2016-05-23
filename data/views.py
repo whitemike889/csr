@@ -45,7 +45,7 @@ def my_login(request, *args, **kwargs):
     response = auth_views.login(request, **kwargs)
     if response.status_code == 302:
         user = User.objects.get(username=request.POST['username'])
-        event = EventLog(user_id=user.id, name="login")
+        event = EventLog(user_id=user.id, name="login", frame=user.treatment.get_frame())
         event.save()
     return response
 
@@ -53,7 +53,7 @@ def my_logout(request, *args, **kwargs):
     description = request.GET.get('message', '')
     if not request.user.is_authenticated():
         return render(request, 'login.html', {'message': "logged out due to inactivity"})
-    event = EventLog(user_id=request.user.id, name="logout", description=description)
+    event = EventLog(user_id=request.user.id, name="logout", description=description, frame=request.user.treatment.get_frame())
     event.save()
     return auth_views.logout(request, next_page="/", extra_context={'message': 'logged out due to inactivity'})
 

@@ -21,11 +21,11 @@ def timeout_logging(view_func):
         if request.method == "POST":
             if image_id:
                 task = Task.objects.get(user_id=request.user.id, image_id=image_id)
-                eventlog = EventLog(user_id=request.user.id, task_id=task.id, name=request.POST['action'])
+                eventlog = EventLog(user_id=request.user.id, task_id=task.id, name=request.POST['action'], frame=request.user.treatment.get_frame())
                 if not check_for_spam(request.user.id, request.POST['seconds']):
                     worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, task_id=task.id, value=request.POST['seconds'], token=request.POST['token'], page="task")
             else:
-                eventlog = EventLog(user_id=request.user.id, name=request.POST['action'])
+                eventlog = EventLog(user_id=request.user.id, name=request.POST['action'], frame=request.user.treatment.get_frame())
             eventlog.save()
         if image_id:
             return view_func(request, image_id, *args, **kwargs)
