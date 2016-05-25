@@ -16,8 +16,8 @@ def get_now():
 class Constants:
     workdates = {
         '1': {
-            'start': datetime.datetime(2016, 5, 19, 0, 01),
-            'end': datetime.datetime(2016, 5, 22, 23, 59),
+            'start': datetime.datetime(2016, 5, 25, 0, 01),
+            'end': datetime.datetime(2016, 5, 28, 23, 59),
             }
         }
 
