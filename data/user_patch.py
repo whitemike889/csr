@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from .models import Image, Task
 
 def get_billable_hours(self):
-    worktimers = self.worktimer_set.all()
+    worktimers = self.worktimer_set.filter(access=1)
     m, s = divmod(sum([x.value for x in worktimers]), 60)
     h, m = divmod(m, 60)
     return "%d:%02d:%02d" % (h, m, s)

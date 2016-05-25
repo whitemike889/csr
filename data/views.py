@@ -118,7 +118,7 @@ def log_event(request, image_id):
 def home_timer(request):
     time = round(float(request.POST['time']))
     token = request.POST['token']
-    worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, page="home", value=int(time), token=token)
+    worktimer, created = WorkTimer.objects.get_or_create(user_id=request.user.id, page="home", value=int(time), token=token,access=int(request.user.treatment.get_access()['access']))
     response = HttpResponse()
     return response
 
