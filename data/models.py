@@ -100,6 +100,7 @@ class WorkTimer(models.Model):
     page = models.CharField(max_length=28, null=True)
     value = models.IntegerField()
     token = models.CharField(max_length=256)
+    access = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class Task(models.Model):
