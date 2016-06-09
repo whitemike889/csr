@@ -169,9 +169,7 @@ class Task(models.Model):
     image = models.ForeignKey(Image)
     finished = models.IntegerField(choices=CHOICES, default=0)
 
-
-    street_num = models.CharField('Street #', max_length=64, null=True)
-    street_nam = models.CharField('Street name', max_length=512, null=True)
+    street_nam = models.CharField('Street name (and # if available)', max_length=512, null=True)
     city = models.CharField("City", max_length=512, null=True)
     state = models.CharField("State", choices=states2, max_length=4, null=True)
     month = models.IntegerField(choices=MONTHS, null=True)
@@ -238,10 +236,10 @@ class Task(models.Model):
         super(Task, self).save(*args, **kwargs)
 
     def __str__(self):
-        if self.street_num and self.street_nam:
+        if self.street_nam:
             y = "{}".format(self.year) if self.year else ""
             m = self.month if self.month else ""
-            return "{} {} {}-{}".format(self.street_num, self.street_nam, m, y)
+            return "{} {}-{}".format(self.street_nam, m, y)
         else:
             return self.image.filename
 

@@ -65,7 +65,7 @@ def task_entry(request, image_id):
     if not request.user.treatment.get_access()['access']:
         redirect('unauthorized')
     fields = [
-        'month','year','street_num', 'street_nam',  'city', 'state', 'pic_quality', 'str_quality', 'pot_holes',
+        'month','year', 'street_nam',  'city', 'state', 'pic_quality', 'str_quality', 'pot_holes',
         'bui_quality', 'car_quality', 'litter', 'road_work', 'graffiti',  'for_sale',
         'shoes', 'people', 'broken_signs', 'trees',
     ]
