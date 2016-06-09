@@ -9,7 +9,8 @@
             </ul>
             {% if request.user.is_authenticated and request.user.treatment.get_access.access %}
             <ul class="nav navbar-form navbar-right">
-                <li><button class="btn btn-info" type="button" id="modalBtnInfo" data-toggle="modal" data-target="#myModalInfo">Instructions</button></li>
+                <li><button class="btn btn-info" type="button" id="modalBtnInfo" data-toggle="modal" data-target="#myModalInfo">Work Summary</button></li>
+                <li><button class="btn btn-info" type="button" id="modalBtnHelp" data-toggle="modal" data-target="#myModalHelp">Instructions</button></li>
             </ul>
             {% endif %}
         </div><!--/ .nav-collapse -->

@@ -1,0 +1,61 @@
+
+<button hidden type="button" id="modalBtnHelp" data-toggle="modal" data-target="#myModalHelp">
+</button>
+<!-- Modal -->
+<div class="modal fade" id="myModalHelp" tabindex="-1" role="dialog" aria-labelledby="myModalLabelHelp">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabelHelp">INSTRUCTIONS</h4>
+      </div>
+      <div class="modal-body">
+          <p>The main screen contains a list of links to addresses. Each address consists of a street-view picture from Google Maps. Your task is to retrieve information based on what can be seen in the picture.  Below the picture is a number of items represented by data entry fields and drop-down menus.  Once you have completed all items, please click "submit" to store the information you entered. This will take you back to the main screen and you can click on a new address.  Please note that the option "save" only saves the entered information. You will need to click "submit" after intering all information in order for the entry to be considered completed.  Below is a brief desciption of the information we are interested in retrieving, along with some instructions on how to properly enter it into the system.</p>
+          <h5>Street Name</h5>
+          <p>Enter the name of the street (including street number if available). This information can be seen in the top left corner of the picture.</p>
+          <h5>State</h5>
+          <p>Enter the State</p>
+          <h5>The quality of the actual picture is high</h5>
+          <p>Assess the quality of the actual picture. Is it easy to see what is in the picture or does it blurry? There is no "right" answer here so you need to use your own judgement. Choose the alternative that best correspons to your impression of the quality of the picture.</p>
+          <h5>Month/Year</h5>
+          <p>Enter the month and year. The month and year can be seen in the top left corner of the picture.</p>
+          <h5>City</h5>
+          <p> Enter the name of the city. The city name can be seen in the top left corner of the picture.</p>
+          <h5>The quality of the streets visible in the picture is high</h5>
+          <p>Assess the quality of the street visible in the picture. For example, are there cracks, potholes, or other damages? Choose the alternative that best correspons to your impression of the quality of the street. There is no "right" answer here so you need to use your own judgement.</p>
+          <h5>The quality of the buildings visible in the picture is high</h5>
+          <p>Assess the quality of the buildings visible in the picture. For example, are there seemingly abandoned buildings, boarded windows or doors, or visible damages to the buildings? Choose the alternative that best corresponds to your impression of the quality of the street. There is no "right" answer here so you need to use your own judgement.</p>
+          <h5>The amount of litter visible in the picture is high</h5>
+          <p>Observe whether there is litter visible on or near the street in the picture. Choose the alternative that best corresponds to your impression of the quality of the street. There is no "right" answer here so you need to use your own judgement.</p>
+          <h5>Is there graffiti visible in the picture</h5>
+          <p>Observe whether is graffiti visible in the picture. Note that murals and commercials that apparently are intended by the owner of the building does not count as graffiti.</p>
+          <h5>Are there shoes on a wire visible in the picture?</h5>
+          <p>Are there any shoes hanging on e.g. an electricity or telephone wire visible in the picture?</p>
+          <h5>Are there any broken street signs visible in the picture?</h5>
+          <p>Observe whether are any broken street signs visible in the picture.</p>
+          <h5>How many potholes are visible in the picture</h5>
+          <p>Count the number of visible potholes in the picture.</p>
+          <h5>The quality of vehicles visible in the picture is high</h5>
+          <p>Assess the quality of the vehicles visible in the picture. Choose the alternative that best corresponds to your impression of the quality of the street. There is no "right" answer here so you need to use your own judgement.</p>
+          <h5>Are there signs of road work visible in the picture?</h5>
+          <p>Observe whether are is any road work going on in the picture.</p>
+          <h5>There are one or more house for sale signs visible in the picture</h5>
+          <p>Observe whether are is any "house for sales" visible in the picture.</p>
+          <h5>Are there trees and/or large bushes visible in the picture</h5>
+          <p>Observe whether are any trees or large bushes visible in the picture.</p>
+          <h5>Are there people actively covering their faces visible in the picture</h5>
+          <p>Observe whether are any individuals covering their faces visible in the picture. Note that individuals will generally have their faces "blurred out". This is not what we are looking for here. What we are looking for is people who by themselves actively covering their faces with e.g. hands or clothes.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" id="clickmodalhelp" value="{{ clickmodal }}">
+
+<script>
+var modalBtn = document.getElementById('modalBtnHelp')
+var clickmodal = document.getElementById('clickmodalinfo').value
+</script>
