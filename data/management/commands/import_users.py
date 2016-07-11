@@ -15,7 +15,7 @@ class Command(BaseCommand):
             mycsv = csv.reader(f)
             next(mycsv, None)
             for row in mycsv:
-                usr, created = User.objecst.get_or_create(username=row[0])
+                usr, created = User.objects.get_or_create(username=row[0])
                 usr.set_password("{}".format(row[1]))
                 usr.save()
                 treat, created = Treatment.objects.get_or_create(user_id=usr.id)
