@@ -20,5 +20,9 @@ class Command(BaseCommand):
                 usr.save()
                 treat, created = Treatment.objects.get_or_create(user_id=usr.id)
                 treat.wage = row[2]
+                treat.timezone = row[3]
+                treat.batch = row[4]
+                treat.assignment = row[5]
+                treat.frameorder = row[6]
                 treat.save()
 
