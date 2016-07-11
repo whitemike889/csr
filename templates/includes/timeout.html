@@ -1,0 +1,19 @@
+
+<script>
+var t;
+window.onload = resetTimer;
+document.onmousemove = resetTimer;
+document.onkeypress = resetTimer;
+
+function logout() {
+    window.location.href = ('/logout?message=timeout');
+}
+
+function resetTimer() {
+    console.log("timer reset");
+    clearTimeout(t);
+    t = setTimeout(logout, 120000)
+    // 1000 milisec = 1 sec
+}
+
+</script>

@@ -25,6 +25,7 @@ class Constants:
         '1':'This project is for one of our clients in the private sector. Your our task is to collect data from Google Streetview snapshots and enter them into a web-form. The task is very similar to the tutorial task. If you need a reminder on the details, please click the "instructions" link in the top right corner.',
         '2':'This project is for one of our clients in the non-profit sector working with improving access to education for underprivileged children. Since we believe the client is trying to make the world a better place, we are giving them a discount on the fees we charge them. Your task is to collect data from Google Streetview snapshots and enter them into a web-form.  The task is very similar to the tutorial task. If you need a reminder on the details, please click the "instructions" link in the top right corner.'
     }
+
 class Treatment(models.Model):
     user = models.OneToOneField(User)
     wage = models.CharField("Wage Rate", max_length=128)
