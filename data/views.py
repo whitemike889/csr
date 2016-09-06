@@ -35,7 +35,6 @@ def list_images(request):
     context = {
         'images': images,
         'clickmodal': clickmodal,
-        'frame': Constants.frames[request.user.treatment.get_frame()],
     }
     return render(request, "data/images.html", context)
 

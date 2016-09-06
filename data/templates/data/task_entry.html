@@ -7,6 +7,17 @@
     {% csrf_token %}
     <div class="row">
         <div class="col-xs-12">
+            {% if request.user.treatment.get_frame == '1' %}
+            <p>This project is for one of our private sector clients. If you need to review this information, you can click on "Instructions" in the top menu.</p>
+            {% elif request.user.treatment.get_frame == '2' %}
+            <p>This project is for one of <b>non-profit clients</b> working with <b>improving access to education for underprivileged children</b>. Since we want to help our non-profits client making the world a better place, we only charge them at cost. If you need a reminder on the details, please click the "instructions" link in the top right corner.</p>
+            {% else %}
+            Message error
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
             <img class="img-responsive" src="{{ task.image.get_url }}">
         </div>
     </div>
