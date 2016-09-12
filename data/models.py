@@ -79,7 +79,7 @@ class Treatment(models.Model):
         return frame
 
 class Image(models.Model):
-    order = models.IntegerField()
+    order = models.IntegerField(null=True)
     filename = models.CharField('Filename', max_length=512)
 
     def get_url(self):

@@ -13,8 +13,8 @@
           {% if request.user.treatment.get_frame == '1' %}
          <p>This project is for one of our <b>private sector clients</b>.</p>
          {% elif request.user.treatment.get_frame == '2' %}
-         <p>This project is for one of <b>non-profit clients</b>.</p>
-         <p>The particular client is working with <b>improving access to education for underprivileged children</b>. Since we want to help our non-profit clients making the world a better place, we only charge them at cost.</p>
+         <p>This project is for one of <b style="color:#3c763d;">non-profit clients</b>.</p>
+         <p>The particular client is working with <b style="color:#3c763d;">improving access to education for underprivileged children</b>. Since we want to help our non-profit clients making the world a better place, we only charge them at cost.</p>
          {% else %}
          Message error
          {% endif %}

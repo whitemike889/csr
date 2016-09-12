@@ -8,6 +8,6 @@ csvFile = os.path.join(ROOT_DIR, 'imagelist.csv')
 with open(csvFile,'w') as f:
     writer = csv.writer(f, csv.excel)
     for item in os.listdir(MENU_DIR):
-        if ".png" in item:
+        if ".png" or ".PNG" in item:
             writer.writerow([item])
 

@@ -16,7 +16,7 @@ class Command(BaseCommand):
                 image, created = Image.objects.get_or_create(filename=x[0])
                 if created:
                     image.order = ordN
-                    ordN + =1
+                    ordN += 1
                 image.save()
 
 
