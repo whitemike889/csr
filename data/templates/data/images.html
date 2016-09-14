@@ -12,12 +12,17 @@
             <div class="row">
                 <div class="col-xs-12">
                     {% if request.user.treatment.get_frame == '1' %}
-                    <p>This project is for one of our <b>private sector clients</b>. If you need to review this information, you can click on "Instructions" in the top menu.</p>
+                    <div class="alert alert-info">
+                    <p>This project is for one of our <b style="font-size:18px">for-profit clients</b>.</p>
+                    </div>
                     {% elif request.user.treatment.get_frame == '2' %}
-                    <p>This project is for one of our <b style="color:#3c763d;">non-profit clients</b> working with <b style="color:#3c763d;">improving access to education for underprivileged children</b>. Since we want to help our non-profits client making the world a better place, we only charge them at cost. If you need a reminder on the details, please click the "instructions" link in the top right corner.</p>
+                    <div class="alert alert-success">
+                    <p>This project is for one of our <b style="font-size:18px;">non-profit clients</b> working with <b style="font-size:18px;">improving access to education for underprivileged children</b>. Since we want to help our non-profit clients in <b style="font-size:18px;">making the world a better place</b>, we only charge them at cost for our services.</p>
+                    </div>
                     {% else %}
                     Message error
                     {% endif %}
+                    <p>If you need to review this information, you can click on "Instructions" in the top menu.</p>
                 </div>
             </div>
         </div>
