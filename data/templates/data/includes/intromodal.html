@@ -24,7 +24,7 @@
          {% endif %}
          <p>Your task is to collect data from Google Streetview snapshots and enter them into a web-form. By now, you should have already been provided with detailed information about the task. If you need to review this information, you can click on “Instructions”in the top menu.</p>
          <p>Please keep in mind that we will only be recording billable hours while you are actually working on assignments. You will also be automatically logged out if you inactive for more than 2 minutes.</p>
-         <p style="font-size:20px">Your wage rate is <b style="font-size:20px">$XX</b> per hour</p>
+         <p style="font-size:20px">Your wage rate is <b style="font-size:20px">${{ request.user.treatment.wage }}</b> per hour</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

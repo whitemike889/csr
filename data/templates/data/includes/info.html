@@ -7,7 +7,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <span style="font-size:20px">Your wage rate is $XX per hour</span>
+                    <span style="font-size:20px">Your wage rate is {{ user.treatment.wage }} per hour</span>
                 </div>
                 <div class="col-md-12">
                     <span style="font-size:20px">{{ user.get_billable_hours }}</span> <span class="label label-info">Time worked</span>
