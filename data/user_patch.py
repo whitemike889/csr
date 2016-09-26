@@ -20,8 +20,11 @@ def get_tasks(self):
         else:
             unfinished.append(task)
         sIds.append(task.image.id)
-
-    for image in Image.objects.all():
+    if int(self.treatment.batch) % 2 == 0:
+        images = Image.objects.all()
+    else:
+        images = Image.objects.order_by("-order")
+    for image in images:
         if image.id not in sIds:
             notStarted.append(image)
 
