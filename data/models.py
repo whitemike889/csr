@@ -31,6 +31,10 @@ class Constants:
             'start': datetime.datetime(2016, 9, 27, 0, 01),
             'end': datetime.datetime(2016, 10, 6, 23, 59),
             },
+        '4': {
+            'start': datetime.datetime(2016, 9, 30, 0, 01),
+            'end': datetime.datetime(2016, 10, 9, 23, 59),
+            },
         }
 
     frames = {
