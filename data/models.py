@@ -25,7 +25,7 @@ class Constants:
             },
         '2': {
             'start': datetime.datetime(2016, 9, 22, 0, 01),
-            'end': datetime.datetime(2016, 10, 3, 23, 59),
+            'end': datetime.datetime(2016, 10, 10, 23, 59),
             },
         '3': {
             'start': datetime.datetime(2016, 9, 27, 0, 01),
