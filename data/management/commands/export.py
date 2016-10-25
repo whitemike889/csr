@@ -21,9 +21,15 @@ class Command(BaseCommand):
         with open(filename, 'w') as f:
             writer = csv.writer(f, csv.excel)
             headers = self.get_headers(model)
-            writer.writerow(headers)
+            if model._meta.object_name == "User":
+                writer.writerow(headers + ['worktime'])
+            else:
+                writer.writerow(headers)
             for obj in model.objects.all():
                 row = [getattr(obj, h) for h in headers]
+                if model._meta.object_name =="User":
+                    worktime = sum([x.value for x in obj.worktimer_set.all()])
+                    row = row + [worktime]
                 writer.writerow(row)
 
     def get_margin_worked(self, user):
