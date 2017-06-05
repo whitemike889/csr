@@ -3,6 +3,7 @@ import website.wsgi
 from data.models import Treatment
 from datetime import timedelta
 import csv
+from django.utils import timezone
 
 def main():
     output = []
@@ -25,6 +26,7 @@ def main():
                         'page': timers[x].page,
                         'token': timers[x].token,
                         'id': timers[x].id,
+                        'frame': get_frame(t, timers[x])
                     }
                     output.append(info)
                 else:
@@ -38,6 +40,7 @@ def main():
                         'page': timers[x].page,
                         'token': timers[x].token,
                         'id': timers[x].id,
+                        'frame': get_frame(t, timers[x])
                     }
                     output.append(info)
         #Add the last value
@@ -56,15 +59,32 @@ def main():
                 'page': timer.page,
                 'token': timer.token,
                 'id': timer.id,
+                'frame': get_frame(t, timer)
             }
             output.append(info)
 
     return output
 
+def get_frame(treatment, timeObject):
+    access = treatment.get_access()
+    localzone = timeObject.timestamp.replace(tzinfo=treatment.ptz())
+    day = localzone - access['start']
+    if localzone >= access['start'] and localzone <= access['end']:
+        frame = treatment.frameorder[day.days]
+    elif day.days == len(treatment.frameorder):
+        frame = treatment.frameorder[-1]
+    else:
+        try:
+            frame = treatment.frameorder[day.days]
+        except IndexError:
+            frame = 0
+    return frame
+
+
 def write_out(output):
     with open('worktimer_fix2.csv', 'w') as f:
         writer = csv.writer(f, csv.excel)
-        headers = ['user', 'user_id', 'task_id', 'timestamp', 'value', 'page', 'token', 'id']
+        headers = ['user', 'user_id', 'task_id', 'timestamp', 'value', 'page', 'token', 'id','frame']
         writer.writerow(headers)
         for o in output:
             row = [o[h] for h in headers]
