@@ -43,6 +43,11 @@ class Constants:
             'start': datetime.datetime(2016, 10, 17, 0,01),
             'end': datetime.datetime(2016, 10, 26, 23,59),
             },
+        # 7 is to make sure frames appears correctly
+        '7': {
+            'start': datetime.datetime(2017, 6, 4, 0,01),
+            'end': datetime.datetime(2017, 6, 13, 23, 59),
+            },
         }
 
     frames = {
