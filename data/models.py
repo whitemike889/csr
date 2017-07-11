@@ -82,6 +82,16 @@ class Treatment(models.Model):
 
         return dict(access=access, start=start, end=end, today=today)
 
+    def get_frame_retro(self, taskday):
+        start = Constants.workdates[self.batch]['start']
+        end = Constants.workdates[self.batch]['end']
+        start = timezone.make_aware(start,pytz.timezone('America/Chicago'))
+        day = taskday - start
+        day = int(day.days)
+        return self.frameorder[day]
+
+
+
     def get_frame(self):
         access = self.get_access()
         if not access['access']:
