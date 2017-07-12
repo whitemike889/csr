@@ -9,13 +9,20 @@ CHK_DIR = os.path.join(BASE_DIR,'dblcheck')
 def import_csv(filename):
     with open(os.path.join(CHK_DIR, filename), 'rb') as f:
         creader = csv.reader(f)
-        next(creader, None)
+        headers = next(creader)
         out = []
         for row in creader:
             out.append(row)
-    return out
+    return out, headers
 
-prod = import_csv('data_struct_prod.csv')
+def write_csv(filename, headers, data):
+    with open(filename, 'w') as f:
+        cwriter = csv.writer(f, csv.excel)
+        cwriter.writerow(headers)
+        for row in data:
+            cwriter.writerow(row)
+
+prod, prodHeaders = import_csv('data_struct_prod.csv')
 
 #add task_index
 idx = 0
@@ -27,14 +34,15 @@ for i in range(1,len(prod)):
         idx = 0
     prod[i].append(idx)
 
+#write_csv('prodex.csv', prodHeaders, prod)
 
-users = import_csv('USERS.csv')
+
+users, usersHeaders = import_csv('USERS.csv')
 
 # clean users
 userDict = {}
 for r in users:
     userDict[int(r[1])] = r[0].replace("'",'')
-
 
 
 # get usersnames for prod
@@ -51,22 +59,30 @@ usrs = User.objects.all()
 
 # this is not a good mapping between the two data sets
 shuffle(prod)
+
 for row in prod[:100]:
+
+    # map prod data to task data
     usr = usrs.filter(username=row[-1])[0]
     tasks = usr.task_set.order_by('id')
+    # row[-2] is an index of the task_set from the DB
     task = tasks[row[-2]]
+
+    #check time
     wt = task.worktimer_set.all()
     seconds = sum(x.value for x in wt)
-    #frame = usr.treatment.get_frame_retro(task.timefinished)
     events = task.eventlog_set.all()
     frames = [int(e.frame) - 1 for e in events]
-    #frame = usr.treatme]
+
     if int(row[0]) not in frames:
         csr_errors += 1
-        #print errors
+
+    # compare task seconds with prod seconds
     if abs(int(seconds) - float(row[8])) > 3:
+        # big differences
         time_errors += 1
 
+print "\ndata_struct_prod"
 print "Errors in csr_treatment: {}".format(csr_errors)
 print "Errors in seconds_production: {}".format(time_errors)
 
@@ -88,10 +104,15 @@ for key, value in userDict.items():
 
 ## writecsv
 
-hours = import_csv('data_struct_hours.csv')
 
+## Check the data_struct_hours
+hours, hoursHeaders = import_csv('data_struct_hours.csv')
+
+## map usernames to hours
 for row in hours:
     row.append(userDict[int(row[4])])
+
+
 wage_errors = 0
 csr_errors = 0
 
@@ -100,6 +121,8 @@ csr_errors = 0
 errorsDict = [{},{}]
 for row in hours:
     usr = usrs.filter(username=row[-1])[0]
+    if len(usrs.filter(username=row[-1])) == 0:
+        print "NO USR FOUND"
     trtwage = usr.treatment.wage
     if int(trtwage) == 11:
         wage = 0
@@ -123,7 +146,7 @@ for row in hours:
         except KeyError:
             errorsDict[1][usr.treatment.batch] = 1
 
-
+print "\nhours_struct_prod"
 print "Errors in csr_treatment: {}".format(csr_errors)
 print "Errors in high_wage: {}".format(wage_errors)
 
@@ -133,5 +156,3 @@ for row in errorsDict:
 
 
 ## compare number of tasks in prod vs my data
-
-
