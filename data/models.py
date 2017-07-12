@@ -82,14 +82,22 @@ class Treatment(models.Model):
 
         return dict(access=access, start=start, end=end, today=today)
 
-    def get_frame_retro(self, taskday):
+
+    def get_day_ranges(self):
         start = Constants.workdates[self.batch]['start']
         end = Constants.workdates[self.batch]['end']
-        start = timezone.make_aware(start,pytz.timezone('America/Chicago'))
-        day = taskday - start
-        day = int(day.days)
-        return self.frameorder[day]
 
+        ranges = []
+        startTemp = start
+        for d in range(len(frameorder)):
+            ranges[d] = dict(start=startTemp, end=start+datetime.timedelta(1))
+            startTemp = start+datetime.timedelta(1)
+
+
+    def get_number_of_task(self, day):
+        bounds = self.get_day_ranges()[day-1]
+        task_set = self.user.task_set.filter(timefinished__lte=bounds['start']).filter(timefinish__lt=bounds['end'])
+        return len(task_set)
 
 
     def get_frame(self):
@@ -269,6 +277,15 @@ class Task(models.Model):
 
     timestarted = models.DateTimeField(default=get_now)
     timefinished = models.DateTimeField(null=True, blank=True)
+
+
+    def get_day(self):
+        start = Constants.workdates[self.user.treatment.batch]['start']
+        end = Constants.workdates[self.user.treatment.batch]['end']
+        start = timezone.make_aware(start,pytz.timezone('America/Chicago'))
+        day = self.timefinished - start
+        day = int(day.days)
+        return day
 
     def save(self, *args, **kwargs):
         if self.finished == 1 and self.timefinished == None:
