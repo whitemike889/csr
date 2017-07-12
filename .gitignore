@@ -1,4 +1,5 @@
 venv
+tasks_per_day.csv
 dblcheck
 *.pyc
 *~

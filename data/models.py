@@ -85,18 +85,21 @@ class Treatment(models.Model):
 
     def get_day_ranges(self):
         start = Constants.workdates[self.batch]['start']
+        start = timezone.make_aware(start,pytz.timezone('America/Chicago'))
         end = Constants.workdates[self.batch]['end']
+        end = timezone.make_aware(end, pytz.timezone("America/Chicago"))
 
         ranges = []
         startTemp = start
-        for d in range(len(frameorder)):
-            ranges[d] = dict(start=startTemp, end=start+datetime.timedelta(1))
-            startTemp = start+datetime.timedelta(1)
+        for d in range(len(self.frameorder)):
+            ranges.append(dict(start=startTemp, end=startTemp+datetime.timedelta(1)))
+            startTemp = startTemp+datetime.timedelta(1)
+        return ranges
 
 
-    def get_number_of_task(self, day):
-        bounds = self.get_day_ranges()[day-1]
-        task_set = self.user.task_set.filter(timefinished__lte=bounds['start']).filter(timefinish__lt=bounds['end'])
+    def get_number_of_tasks(self, day):
+        bounds = self.get_day_ranges()[day]
+        task_set = self.user.task_set.filter(timefinished__gte=bounds['start']).filter(timefinished__lt=bounds['end'])
         return len(task_set)
 
 

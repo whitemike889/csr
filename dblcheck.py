@@ -96,13 +96,14 @@ outData =  []
 for key, value in userDict.items():
     usr = User.objects.get(username=value)
     userProd = list(filter(lambda row: int(row[4]) == int(key), prod))
-    for day in range(len(usr.treamtment.frameorder)):
-        dayList = list(filter(lambda row: int(row[2]) == day, userProd))
-        row = [value, day, len(dayList), usr.treatment.get_number_of_tasks(day)]
+    for day in range(len(usr.treatment.frameorder)):
+        dayList = list(filter(lambda row: int(row[2]) == day+1, userProd))
+        row = [value, day, len(dayList), usr.treatment.get_number_of_tasks(day), usr.treatment.batch]
         outData.append(row)
 
+outDataHeaders = ['user', 'day', 'tasks_per_day_brent', 'tasks_per_day_joe', 'batch']
 
-## writecsv
+write_csv('tasks_per_day.csv', outDataHeaders, outData)
 
 
 ## Check the data_struct_hours
@@ -140,7 +141,6 @@ for row in hours:
     frame = usr.treatment.frameorder[int(row[2])-1]
     if int(frame)-1 != int(row[0]):
         csr_errors += 1
-        print usr.treatment.batch
         try:
             errorsDict[1][usr.treatment.batch] = errorsDict[1][usr.treatment.batch] + 1
         except KeyError:
