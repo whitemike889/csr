@@ -87,9 +87,6 @@ print "Errors in csr_treatment: {}".format(csr_errors)
 print "Errors in seconds_production: {}".format(time_errors)
 
 
-
-
-
 ## compare number of tasks in prod vs my data
 # user, day, prod_no, db_no
 outData =  []
@@ -154,5 +151,3 @@ print "Errors in high_wage: {}".format(wage_errors)
 for row in errorsDict:
     print row
 
-
-## compare number of tasks in prod vs my data
