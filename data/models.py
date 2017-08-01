@@ -286,7 +286,10 @@ class Task(models.Model):
         start = Constants.workdates[self.user.treatment.batch]['start']
         end = Constants.workdates[self.user.treatment.batch]['end']
         start = timezone.make_aware(start,pytz.timezone('America/Chicago'))
-        day = self.timefinished - start
+        try:
+            day = self.timefinished - start
+        except TypeError:
+            day = self.timestarted - start
         day = int(day.days)
         return day
 

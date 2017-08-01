@@ -1,3 +1,17 @@
+"""
+To run this code.  The files to check should be put in the dblcheck folder.
+Use the same naming and make sure they are in the same column format.
+
+cd to this project's directory, type
+$ source venv/bin/activate
+$ python dblcheck.py
+
+The terminal/console will display some information on discrepencies found.
+A the following csv will be created
+    tasks_per_day.csv
+    csr_treatment_errors.csv
+
+"""
 import csv, os
 import website.wsgi
 from django.conf import settings
@@ -50,10 +64,9 @@ for row in prod:
     row.append(userDict[int(row[4])])
 
 # check frame and minutes
-# 11 or 15 from DB
-csr_errors = 0
+# 11 or 15 from DBrors = 0
 time_errors = 0
-
+csr_errors = 0
 usrs = User.objects.all()
 
 
@@ -117,6 +130,11 @@ csr_errors = 0
 
 #shuffle(hours)
 errorsDict = [{},{}]
+csrErrorLog = []
+csrErrorLogHeaders= ['username', 'day', 'batch']
+wageErrorLog =[]
+wageErrorLogHeaders = ['username', 'batch']
+
 for row in hours:
     usr = usrs.filter(username=row[-1])[0]
     if len(usrs.filter(username=row[-1])) == 0:
@@ -130,6 +148,7 @@ for row in hours:
         pass
     if wage != int(row[5]):
         wage_errors += 1
+        wageErrorLog.append([usr.username, usr.treatment.batch])
         try:
             errorsDict[0][usr.treatment.batch] = errorsDict[0][usr.treatment.batch] + 1
         except KeyError:
@@ -137,16 +156,19 @@ for row in hours:
 
     frame = usr.treatment.frameorder[int(row[2])-1]
     if int(frame)-1 != int(row[0]):
+        csrErrorLog.append([usr.username, int(row[2]), usr.treatment.batch])
         csr_errors += 1
         try:
             errorsDict[1][usr.treatment.batch] = errorsDict[1][usr.treatment.batch] + 1
         except KeyError:
             errorsDict[1][usr.treatment.batch] = 1
 
-print "\nhours_struct_prod"
-print "Errors in csr_treatment: {}".format(csr_errors)
-print "Errors in high_wage: {}".format(wage_errors)
+write_csv('csr_treatment_errors.csv', csrErrorLogHeaders, csrErrorLog)
+write_csv('wage_errors.csv', wageErrorLogHeaders, wageErrorLog)
 
+print "\nhours_struct_prod"
+print "Errors in high_wage: {}".format(wage_errors)
+print "Errors in csr_treatment: {}".format(csr_errors)
 
 for row in errorsDict:
     print row
